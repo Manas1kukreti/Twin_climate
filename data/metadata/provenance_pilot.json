@@ -1,0 +1,103 @@
+{
+  "provider": "Copernicus Climate Change Service (C3S) / ECMWF",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "dataset_doi": "10.24381/ee82e357",
+  "source_type": "reanalysis_grid_cell",
+  "product_user_guide": "https://confluence.ecmwf.int/pages/viewpage.action?pageId=536218894",
+  "license": "CC-BY 4.0",
+  "requested_location": {
+    "latitude": 28.61,
+    "longitude": 77.21
+  },
+  "actual_returned_location": "PENDING \u2014 inspect extracted NetCDF",
+  "requested_period": {
+    "start": "2018-01-01",
+    "end": "2018-01-03"
+  },
+  "actual_first_timestamp": "PENDING \u2014 inspect extracted NetCDF",
+  "actual_last_timestamp": "PENDING \u2014 inspect extracted NetCDF",
+  "validated_sampling_interval": "PENDING \u2014 inspect extracted NetCDF",
+  "variable_request_names": [
+    "2m_temperature",
+    "2m_dewpoint_temperature",
+    "surface_pressure",
+    "total_precipitation",
+    "10m_u_component_of_wind",
+    "10m_v_component_of_wind"
+  ],
+  "returned_netcdf_short_names": "PENDING \u2014 inspect extracted NetCDF",
+  "units": "PENDING \u2014 inspect extracted NetCDF",
+  "cds_request_parameters": {
+    "dataset": "reanalysis-era5-land-timeseries",
+    "data_format": "netcdf",
+    "location": {
+      "latitude": 28.61,
+      "longitude": 77.21
+    },
+    "date_range": "2018-01-01/2018-01-03",
+    "note": "credentials excluded"
+  },
+  "retrieval_date": "2026-08-31",
+  "is_pilot": true,
+  "raw_files": [
+    {
+      "group": "2m_temperature",
+      "variables_cds_request": [
+        "2m_temperature",
+        "2m_dewpoint_temperature"
+      ],
+      "zip_filename": "era5land_2m_temperature_2018-01-01_2018-01-03.zip",
+      "zip_path": "data\\sample\\pilot\\raw\\era5land_2m_temperature_2018-01-01_2018-01-03.zip",
+      "zip_size_bytes": 20935,
+      "zip_sha256": "eb3c457683b32e9cbe4452d4c8f6a122d2d1aa7aab4d20750e20d182c7921891",
+      "nc_filename": "era5land_2m_temperature_2018-01-01_2018-01-03.nc",
+      "nc_path": "data\\sample\\pilot\\extracted\\era5land_2m_temperature_2018-01-01_2018-01-03.nc",
+      "nc_size_bytes": 20710,
+      "nc_sha256": "f8e26ccd15c46010894c9fba068404606c8bf2cc5902671c5fbf80472508a563",
+      "extracted_from": "era5land_2m_temperature_2018-01-01_2018-01-03.zip",
+      "retrieved_at": "2026-08-31T15:11:55.421840+00:00"
+    },
+    {
+      "group": "pressure_precipitation",
+      "variables_cds_request": [
+        "surface_pressure",
+        "total_precipitation"
+      ],
+      "zip_filename": "era5land_pressure_precipitation_2018-01-01_2018-01-03.zip",
+      "zip_path": "data\\sample\\pilot\\raw\\era5land_pressure_precipitation_2018-01-01_2018-01-03.zip",
+      "zip_size_bytes": 20966,
+      "zip_sha256": "8fded7f74528225aec1c778b2b207e1a5e711a11c416f8ff918af6c26904dd76",
+      "nc_filename": "era5land_pressure_precipitation_2018-01-01_2018-01-03.nc",
+      "nc_path": "data\\sample\\pilot\\extracted\\era5land_pressure_precipitation_2018-01-01_2018-01-03.nc",
+      "nc_size_bytes": 20725,
+      "nc_sha256": "91385bcfd678ea91ededdf3c475df3a7f5d140b6c0608addea4d7878808386bf",
+      "extracted_from": "era5land_pressure_precipitation_2018-01-01_2018-01-03.zip",
+      "retrieved_at": "2026-08-31T15:11:55.427638+00:00"
+    },
+    {
+      "group": "wind",
+      "variables_cds_request": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "zip_filename": "era5land_wind_2018-01-01_2018-01-03.zip",
+      "zip_path": "data\\sample\\pilot\\raw\\era5land_wind_2018-01-01_2018-01-03.zip",
+      "zip_size_bytes": 20905,
+      "zip_sha256": "11f1a6bdf2b1358b879696ac0337a9721af6e5235c2655f7e8c814512196e655",
+      "nc_filename": "era5land_wind_2018-01-01_2018-01-03.nc",
+      "nc_path": "data\\sample\\pilot\\extracted\\era5land_wind_2018-01-01_2018-01-03.nc",
+      "nc_size_bytes": 20700,
+      "nc_sha256": "3c055834d914012939f5348d0416b6f3f040b1ba1cc72a1599fcd595b8c1712b",
+      "extracted_from": "era5land_wind_2018-01-01_2018-01-03.zip",
+      "retrieved_at": "2026-08-31T15:11:55.429236+00:00"
+    }
+  ],
+  "software_versions": {
+    "python": "3.14.5",
+    "cdsapi": "unknown",
+    "xarray": "2026.7.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "torch": "2.13.0+cpu"
+  }
+}

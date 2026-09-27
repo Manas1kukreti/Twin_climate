@@ -1,0 +1,121 @@
+{
+  "run_id": "lstm_scratch_delhi_seed42_001",
+  "model": "lstm",
+  "parameter_count": 52102,
+  "seed": 42,
+  "input_window": 24,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "hyperparameters": {
+    "n_features": 6,
+    "n_targets": 6,
+    "input_window": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "max_epochs": 100,
+    "early_stopping_patience": 10
+  },
+  "training_epochs": 31,
+  "best_epoch": 21,
+  "best_val_loss": 0.0888464085225548,
+  "wall_clock_seconds": 271.76,
+  "test_sample_count": 8760,
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.48498547077178955,
+      "rmse": 0.6620127558708191
+    },
+    "d2m": {
+      "mae": 0.5056480169296265,
+      "rmse": 0.7515986561775208
+    },
+    "sp": {
+      "mae": 0.3853233754634857,
+      "rmse": 0.5400981903076172
+    },
+    "tp": {
+      "mae": 0.09312406927347183,
+      "rmse": 0.37935033440589905
+    },
+    "u10": {
+      "mae": 0.26831215620040894,
+      "rmse": 0.412777304649353
+    },
+    "v10": {
+      "mae": 0.26269030570983887,
+      "rmse": 0.3989950716495514
+    }
+  },
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "persistence_comparison": {
+    "t2m": {
+      "persistence_rmse": 1.2729,
+      "lstm_rmse": 0.662,
+      "abs_diff": 0.6109,
+      "pct_improvement": 47.99,
+      "lstm_better": true
+    },
+    "d2m": {
+      "persistence_rmse": 0.6883,
+      "lstm_rmse": 0.7516,
+      "abs_diff": -0.0633,
+      "pct_improvement": -9.2,
+      "lstm_better": false
+    },
+    "sp": {
+      "persistence_rmse": 0.5044,
+      "lstm_rmse": 0.5401,
+      "abs_diff": -0.0357,
+      "pct_improvement": -7.08,
+      "lstm_better": false
+    },
+    "tp": {
+      "persistence_rmse": 0.3841,
+      "lstm_rmse": 0.3794,
+      "abs_diff": 0.0047,
+      "pct_improvement": 1.24,
+      "lstm_better": true
+    },
+    "u10": {
+      "persistence_rmse": 0.4778,
+      "lstm_rmse": 0.4128,
+      "abs_diff": 0.065,
+      "pct_improvement": 13.61,
+      "lstm_better": true
+    },
+    "v10": {
+      "persistence_rmse": 0.4717,
+      "lstm_rmse": 0.399,
+      "abs_diff": 0.0727,
+      "pct_improvement": 15.41,
+      "lstm_better": true
+    }
+  },
+  "evaluation_date": "2026-08-31T17:42:56.094567+00:00"
+}

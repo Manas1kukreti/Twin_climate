@@ -1,0 +1,27 @@
+# ClimateTwin — Pretraining Configuration
+# UNRESOLVED fields will be populated during Phase 8 (pretraining data setup).
+
+pretrain_locations: []     # UNRESOLVED: see §9.8
+exclude_target_location: true
+
+pretrain_data_source: "UNRESOLVED"
+architecture: "transformer"  # must match transformer.yaml architecture
+
+normalization_policy: "UNRESOLVED: see §9.14"
+
+learning_rate: null
+batch_size: null
+epochs: null
+
+early_stopping:
+  patience: null
+  metric: "val_loss"
+
+pretrain_split:
+  method: "chronological_per_location"
+  val_fraction: null
+
+seed: 42
+device: "auto"
+
+checkpoint_dir: "results/checkpoints"

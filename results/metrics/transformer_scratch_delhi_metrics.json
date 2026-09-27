@@ -1,0 +1,182 @@
+{
+  "run_id": "transformer_scratch_delhi_seed42_001",
+  "model": "transformer_scratch",
+  "parameter_count": 399110,
+  "architecture": {
+    "type": "lightweight_transformer_encoder",
+    "d_model": 128,
+    "nhead": 4,
+    "num_encoder_layers": 3,
+    "dim_feedforward": 256,
+    "dropout": 0.1,
+    "positional_encoding": "sinusoidal"
+  },
+  "hyperparameters": {
+    "n_features": 6,
+    "n_targets": 6,
+    "input_window": 24,
+    "d_model": 128,
+    "nhead": 4,
+    "num_encoder_layers": 3,
+    "dim_feedforward": 256,
+    "dropout": 0.1,
+    "learning_rate": 0.0005,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "max_epochs": 100,
+    "early_stopping_patience": 10,
+    "positional_encoding": "sinusoidal"
+  },
+  "seed": 42,
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 2050",
+  "torch_version": "2.13.0+cu126",
+  "cuda_version": "12.6",
+  "input_window": 24,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "training_epochs": 18,
+  "best_epoch": 8,
+  "best_val_loss": 0.09021812682705266,
+  "wall_clock_seconds": 153.74,
+  "peak_gpu_memory_mb": 163.22,
+  "test_sample_count": 8760,
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.4196646809577942,
+      "rmse": 0.5768741369247437
+    },
+    "d2m": {
+      "mae": 0.4137797951698303,
+      "rmse": 0.6427331566810608
+    },
+    "sp": {
+      "mae": 0.2780260741710663,
+      "rmse": 0.3950430452823639
+    },
+    "tp": {
+      "mae": 0.09682416170835495,
+      "rmse": 0.40418073534965515
+    },
+    "u10": {
+      "mae": 0.2736203074455261,
+      "rmse": 0.4256548285484314
+    },
+    "v10": {
+      "mae": 0.26962393522262573,
+      "rmse": 0.4156129062175751
+    }
+  },
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "comparison_vs_persistence": {
+    "t2m": {
+      "baseline_rmse": 1.2729275388868309,
+      "transformer_rmse": 0.5769,
+      "abs_diff": 0.6961,
+      "pct_improvement": 54.68,
+      "transformer_better": true
+    },
+    "d2m": {
+      "baseline_rmse": 0.6883188206561703,
+      "transformer_rmse": 0.6427,
+      "abs_diff": 0.0456,
+      "pct_improvement": 6.62,
+      "transformer_better": true
+    },
+    "sp": {
+      "baseline_rmse": 0.5043727475418126,
+      "transformer_rmse": 0.395,
+      "abs_diff": 0.1093,
+      "pct_improvement": 21.68,
+      "transformer_better": true
+    },
+    "tp": {
+      "baseline_rmse": 0.3841330792819837,
+      "transformer_rmse": 0.4042,
+      "abs_diff": -0.02,
+      "pct_improvement": -5.22,
+      "transformer_better": false
+    },
+    "u10": {
+      "baseline_rmse": 0.47777736240542046,
+      "transformer_rmse": 0.4257,
+      "abs_diff": 0.0521,
+      "pct_improvement": 10.91,
+      "transformer_better": true
+    },
+    "v10": {
+      "baseline_rmse": 0.4716503440295256,
+      "transformer_rmse": 0.4156,
+      "abs_diff": 0.056,
+      "pct_improvement": 11.88,
+      "transformer_better": true
+    }
+  },
+  "comparison_vs_lstm": {
+    "t2m": {
+      "baseline_rmse": 0.6620127558708191,
+      "transformer_rmse": 0.5769,
+      "abs_diff": 0.0851,
+      "pct_improvement": 12.86,
+      "transformer_better": true
+    },
+    "d2m": {
+      "baseline_rmse": 0.7515986561775208,
+      "transformer_rmse": 0.6427,
+      "abs_diff": 0.1089,
+      "pct_improvement": 14.48,
+      "transformer_better": true
+    },
+    "sp": {
+      "baseline_rmse": 0.5400981903076172,
+      "transformer_rmse": 0.395,
+      "abs_diff": 0.1451,
+      "pct_improvement": 26.86,
+      "transformer_better": true
+    },
+    "tp": {
+      "baseline_rmse": 0.37935033440589905,
+      "transformer_rmse": 0.4042,
+      "abs_diff": -0.0248,
+      "pct_improvement": -6.55,
+      "transformer_better": false
+    },
+    "u10": {
+      "baseline_rmse": 0.412777304649353,
+      "transformer_rmse": 0.4257,
+      "abs_diff": -0.0129,
+      "pct_improvement": -3.12,
+      "transformer_better": false
+    },
+    "v10": {
+      "baseline_rmse": 0.3989950716495514,
+      "transformer_rmse": 0.4156,
+      "abs_diff": -0.0166,
+      "pct_improvement": -4.16,
+      "transformer_better": false
+    }
+  },
+  "evaluation_date": "2026-08-31T21:11:42.433292+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin session context",
+      "description": "Show lightweight repository state at the start of each Kiro session.",
+      "enabled": true,
+      "trigger": "SessionStart",
+      "action": {
+        "type": "command",
+        "command": "python -c \"import subprocess; p=subprocess.run(['git','status','--short','--branch'],capture_output=True,text=True); print(p.stdout.strip() if p.returncode==0 else 'Git repository not initialized yet')\""
+      },
+      "timeout": 15
+    }
+  ]
+}

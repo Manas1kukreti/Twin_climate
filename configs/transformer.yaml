@@ -1,0 +1,35 @@
+# ClimateTwin — Transformer Configuration (§9.6 RESOLVED)
+# Primary scratch-Transformer experiment — no hyperparameter search.
+# This exact architecture must be reused unchanged for Phase 8 pretraining
+# and Phase 9 fine-tuning, so scratch/pretrained parameter counts match.
+
+n_features: 6
+n_targets: 6
+input_window: 24
+
+d_model: 128
+nhead: 4
+num_encoder_layers: 3
+dim_feedforward: 256
+dropout: 0.1
+positional_encoding: "sinusoidal"
+
+batch_size: 256
+learning_rate: 0.0005
+optimizer: "Adam"
+loss: "MSE"
+epochs: 100
+
+early_stopping:
+  enabled: true
+  patience: 10
+  monitor: "val_loss"
+  mode: "min"
+
+seed: 42
+device: "auto"
+
+checkpoint_dir: "results/checkpoints"
+metrics_dir: "results/metrics"
+predictions_dir: "results/predictions"
+manifests_dir: "results/manifests"

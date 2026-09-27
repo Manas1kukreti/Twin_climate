@@ -1,0 +1,28 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin dashboard tests",
+      "description": "Run dashboard tests when dashboard code changes. Enable in Phase 14.",
+      "enabled": false,
+      "trigger": "PostFileSave",
+      "matcher": "(^|[\\\\/])dashboard[\\\\/].*\\.py$",
+      "action": {
+        "type": "command",
+        "command": "python -m pytest -q tests/test_dashboard.py"
+      },
+      "timeout": 180
+    },
+    {
+      "name": "ClimateTwin dashboard artifact audit",
+      "description": "Review dashboard changes for artifact integrity and scientific labeling. Enable in Phase 14.",
+      "enabled": false,
+      "trigger": "PostFileSave",
+      "matcher": "(^|[\\\\/])dashboard[\\\\/].*\\.py$",
+      "action": {
+        "type": "agent",
+        "prompt": "Review the just-saved ClimateTwin dashboard code. Review only; do not modify files in this hook. Verify that the UI consumes saved manifest-linked artifacts rather than retraining models, marks unavailable experiments clearly instead of using placeholders, uses dynamic scenario controls derived from actual configured features, displays per-variable metrics with correct units, shows the mandatory non-causal scenario disclaimer, and does not overstate Aurora/CREDIT reproduction or model performance. Browser-level Playwright validation should remain an explicit Phase 14 task, not an automatic file-save action."
+      }
+    }
+  ]
+}

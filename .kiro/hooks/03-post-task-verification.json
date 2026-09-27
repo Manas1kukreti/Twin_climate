@@ -1,0 +1,26 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin test suite after task",
+      "description": "Run the fast test suite after each completed spec task. Enable after Phase 0 installs pytest.",
+      "enabled": true,
+      "trigger": "PostTaskExec",
+      "action": {
+        "type": "command",
+        "command": "python -m pytest -q"
+      },
+      "timeout": 600
+    },
+    {
+      "name": "ClimateTwin post-task research audit",
+      "description": "Audit scientific outputs after each completed spec task.",
+      "enabled": true,
+      "trigger": "PostTaskExec",
+      "action": {
+        "type": "agent",
+        "prompt": "Audit the ClimateTwin spec task that just completed. Review only; do not edit files in this hook. Verify that its acceptance criteria are genuinely satisfied and downstream status was not advanced merely because code was written. If the task produced experimental artifacts, verify traceability from configuration/run ID to preprocessing state, checkpoint where applicable, predictions, metrics, and manifest/provenance. Confirm that no placeholder or fabricated scientific result is represented as executed. Check for chronological leakage, scaler misuse, feature-order mismatch, target/test contamination, and unsupported claims when relevant. Report any blocker or inconsistency succinctly."
+      }
+    }
+  ]
+}

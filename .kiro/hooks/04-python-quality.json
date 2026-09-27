@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin Python lint",
+      "description": "Run Ruff in check-only mode whenever Python code is saved. Enable after Phase 0 installs Ruff.",
+      "enabled": true,
+      "trigger": "PostFileSave",
+      "matcher": "\\.py$",
+      "action": {
+        "type": "command",
+        "command": "python -m ruff check src scripts dashboard tests"
+      },
+      "timeout": 120
+    }
+  ]
+}

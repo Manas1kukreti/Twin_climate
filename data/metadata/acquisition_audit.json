@@ -1,0 +1,60 @@
+{
+  "audit_type": "corrective_audit",
+  "audit_date": "2026-08-31",
+  "description": "Records non-authoritative 2022-2024 NetCDF files recovered from a non-compliant earlier acquisition run. Original CDS ZIP response archives were lost during in-place extraction. These files must not be used for final model experiments once the authoritative 2018-2024 dataset is available.",
+  "status": "non_authoritative_recovered_artifacts",
+  "original_cds_zip_archives": "LOST — extracted in-place and originals deleted during earlier run",
+  "deviations": [
+    "Historical period changed from approved 2018-2024 to 2022-2024 without formal research-period approval",
+    "Pilot-only gate (24-72h test before full download) was not followed",
+    "CDS ZIP response archives were saved with .nc extension, then extracted in-place, and originals deleted",
+    "Provenance hashes were computed against ZIP archives but files on disk are extracted NetCDF — provenance was stale"
+  ],
+  "recovered_files": [
+    {
+      "original_path": "data/raw/era5land_2m_temperature_2022-01-01_2024-12-31.nc",
+      "recovered_path": "data/processed/recovered_2022_2024/era5land_2m_temperature_2022-01-01_2024-12-31.nc",
+      "file_type": "extracted_netcdf",
+      "size_bytes": 441574,
+      "sha256": "925ef97fb54695d74d608a6d66dd54e627b5aebf3da9085a05b49df7a9de043a",
+      "variables_netcdf_short": ["d2m", "t2m"],
+      "variables_cds_request": ["2m_dewpoint_temperature", "2m_temperature"],
+      "time_start": "2022-01-01T00:00:00",
+      "time_end": "2024-12-31T23:00:00",
+      "timesteps": 26304,
+      "latitude": 28.60,
+      "longitude": 77.20,
+      "nan_count": 0
+    },
+    {
+      "original_path": "data/raw/era5land_pressure_precipitation_2022-01-01_2024-12-31.nc",
+      "recovered_path": "data/processed/recovered_2022_2024/era5land_pressure_precipitation_2022-01-01_2024-12-31.nc",
+      "file_type": "extracted_netcdf",
+      "size_bytes": 441589,
+      "sha256": "66f7dd10853179c7a9562ba219ac665a63f11ba563c0e8a9aa988150a021452b",
+      "variables_netcdf_short": ["sp", "tp"],
+      "variables_cds_request": ["surface_pressure", "total_precipitation"],
+      "time_start": "2022-01-01T00:00:00",
+      "time_end": "2024-12-31T23:00:00",
+      "timesteps": 26304,
+      "latitude": 28.60,
+      "longitude": 77.20,
+      "nan_count": 0
+    },
+    {
+      "original_path": "data/raw/era5land_wind_2022-01-01_2024-12-31.nc",
+      "recovered_path": "data/processed/recovered_2022_2024/era5land_wind_2022-01-01_2024-12-31.nc",
+      "file_type": "extracted_netcdf",
+      "size_bytes": 441564,
+      "sha256": "0c8095c3411daf3f282489212a2589658af055f78505f455cdb34530adc5e1d5",
+      "variables_netcdf_short": ["u10", "v10"],
+      "variables_cds_request": ["10m_u_component_of_wind", "10m_v_component_of_wind"],
+      "time_start": "2022-01-01T00:00:00",
+      "time_end": "2024-12-31T23:00:00",
+      "timesteps": 26304,
+      "latitude": 28.60,
+      "longitude": 77.20,
+      "nan_count": 0
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "report_type": "preprocessing",
+  "report_date": "2026-08-31T16:32:19.175902+00:00",
+  "source": "ERA5-Land hourly time-series",
+  "target_location": "Delhi",
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "n_features": 6,
+  "n_targets": 6,
+  "input_window": 24,
+  "unit_conversions": {
+    "t2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "d2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "sp": "Pa \u2192 hPa (divide by 100)",
+    "tp": "m \u2192 mm (multiply by 1000)",
+    "u10": "m s**-1 \u2192 m/s (no conversion needed)",
+    "v10": "m s**-1 \u2192 m/s (no conversion needed)"
+  },
+  "precipitation_negatives_corrected": 1132,
+  "timestamp_validation": {
+    "is_sorted": true,
+    "n_duplicates": 0,
+    "n_records": 61368,
+    "first_timestamp": "2018-01-01 00:00:00",
+    "last_timestamp": "2024-12-31 23:00:00",
+    "detected_interval": "0 days 01:00:00",
+    "expected_interval": "1h",
+    "n_irregular_intervals": 0,
+    "n_missing_timestamps": 0
+  },
+  "split_summary": {
+    "train": {
+      "rows": 43824,
+      "start": "2018-01-01 00:00:00",
+      "end": "2022-12-31 23:00:00",
+      "sequences": 43800
+    },
+    "validation": {
+      "rows": 8760,
+      "start": "2023-01-01 00:00:00",
+      "end": "2023-12-31 23:00:00",
+      "sequences": 8736
+    },
+    "test": {
+      "rows": 8784,
+      "start": "2024-01-01 00:00:00",
+      "end": "2024-12-31 23:00:00",
+      "sequences": 8760
+    }
+  },
+  "total_rows": 61368,
+  "total_sequences": 61296,
+  "scaler_type": "StandardScaler",
+  "scaler_path": "data/processed/scaler.joblib",
+  "scaler_means": {
+    "t2m": 24.385582841369697,
+    "d2m": 15.463339156937364,
+    "sp": 981.974274045144,
+    "tp": 0.08723309893810062,
+    "u10": 0.24661299804998776,
+    "v10": -0.529525912865621
+  },
+  "scaler_scales": {
+    "t2m": 8.058676110639054,
+    "d2m": 6.928304301743367,
+    "sp": 6.813883981663458,
+    "tp": 0.45696623024537386,
+    "u10": 2.1416425589389485,
+    "v10": 1.4619694367407645
+  },
+  "artifacts": [
+    "data/processed/train.csv",
+    "data/processed/val.csv",
+    "data/processed/test.csv",
+    "data/processed/train_scaled.csv",
+    "data/processed/val_scaled.csv",
+    "data/processed/test_scaled.csv",
+    "data/processed/scaler.joblib"
+  ],
+  "missing_value_strategy": "drop",
+  "derived_features": []
+}

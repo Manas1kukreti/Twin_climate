@@ -1,0 +1,254 @@
+{
+  "report_type": "raw_data_inspection",
+  "report_date": "2026-08-31T15:31:22.213828+00:00",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "source_type": "reanalysis_grid_cell",
+  "requested_coordinates": {
+    "latitude": 28.61,
+    "longitude": 77.21
+  },
+  "returned_coordinates": {
+    "latitude": 28.6,
+    "longitude": 77.2
+  },
+  "timestamp_start": "2018-01-01 00:00:00",
+  "timestamp_end": "2024-12-31 23:00:00",
+  "record_count": 61368,
+  "detected_sampling_interval": "0 days 01:00:00",
+  "duplicate_count": 0,
+  "irregular_interval_count": 0,
+  "missing_timestamp_count": 0,
+  "cross_file_timestamp_consistency": true,
+  "variables": {
+    "d2m": {
+      "group": "2m_temperature",
+      "long_name": "2 metre dewpoint temperature",
+      "units": "K",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": 265.542847,
+      "max": 301.407013,
+      "mean": 288.606747,
+      "std": 6.973201,
+      "p01": 275.387996,
+      "p25": 282.853317,
+      "p50": 287.465881,
+      "p75": 295.729889,
+      "p99": 299.751576
+    },
+    "t2m": {
+      "group": "2m_temperature",
+      "long_name": "2 metre temperature",
+      "units": "K",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": 274.350311,
+      "max": 318.678528,
+      "mean": 297.554835,
+      "std": 8.039495,
+      "p01": 279.949343,
+      "p25": 291.643692,
+      "p50": 298.983673,
+      "p75": 303.206444,
+      "p99": 314.17916
+    },
+    "sp": {
+      "group": "pressure_precipitation",
+      "long_name": "Surface pressure",
+      "units": "Pa",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": 96366.679688,
+      "max": 99880.578125,
+      "mean": 98216.556569,
+      "std": 681.375318,
+      "p01": 96906.065234,
+      "p25": 97630.033203,
+      "p50": 98232.578125,
+      "p75": 98810.330078,
+      "p99": 99437.957812
+    },
+    "tp": {
+      "group": "pressure_precipitation",
+      "long_name": "Total precipitation",
+      "units": "m",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": -0.0,
+      "max": 0.014923,
+      "mean": 8.9e-05,
+      "std": 0.000478,
+      "p01": -0.0,
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 1e-06,
+      "p99": 0.002173
+    },
+    "u10": {
+      "group": "wind",
+      "long_name": "10 metre U wind component",
+      "units": "m s**-1",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": -8.214066,
+      "max": 8.930069,
+      "mean": 0.303504,
+      "std": 2.104618,
+      "p01": -4.516052,
+      "p25": -1.314529,
+      "p50": 0.531425,
+      "p75": 1.871959,
+      "p99": 4.888741
+    },
+    "v10": {
+      "group": "wind",
+      "long_name": "10 metre V wind component",
+      "units": "m s**-1",
+      "shape": [
+        61368
+      ],
+      "dtype": "float32",
+      "nan_count": 0,
+      "total_count": 61368,
+      "min": -7.455601,
+      "max": 7.438873,
+      "mean": -0.554729,
+      "std": 1.448044,
+      "p01": -3.478708,
+      "p25": -1.660432,
+      "p50": -0.684387,
+      "p75": 0.487739,
+      "p99": 2.877728
+    }
+  },
+  "precipitation_analysis": {
+    "negative_count": 1132,
+    "negative_min_m": -3.5529e-08,
+    "negative_max_m": -0.0,
+    "zero_count": 40705,
+    "positive_count": 19531,
+    "max_mm_per_hour": 14.9228,
+    "note": "Tiny negative values are a known ERA5-Land numerical artifact from de-accumulation"
+  },
+  "physical_plausibility": {
+    "t2m": {
+      "expected_range": [
+        260,
+        330
+      ],
+      "expected_units": "K",
+      "actual_range": [
+        274.350311,
+        318.678528
+      ],
+      "plausible": true
+    },
+    "d2m": {
+      "expected_range": [
+        240,
+        310
+      ],
+      "expected_units": "K",
+      "actual_range": [
+        265.542847,
+        301.407013
+      ],
+      "plausible": true
+    },
+    "sp": {
+      "expected_range": [
+        90000,
+        105000
+      ],
+      "expected_units": "Pa",
+      "actual_range": [
+        96366.679688,
+        99880.578125
+      ],
+      "plausible": true
+    },
+    "u10": {
+      "expected_range": [
+        -25,
+        25
+      ],
+      "expected_units": "m s**-1",
+      "actual_range": [
+        -8.214066,
+        8.930069
+      ],
+      "plausible": true
+    },
+    "v10": {
+      "expected_range": [
+        -25,
+        25
+      ],
+      "expected_units": "m s**-1",
+      "actual_range": [
+        -7.455601,
+        7.438873
+      ],
+      "plausible": true
+    },
+    "tp": {
+      "expected_range": [
+        -1e-06,
+        0.1
+      ],
+      "expected_units": "m",
+      "actual_range": [
+        -0.0,
+        0.014923
+      ],
+      "plausible": true
+    }
+  },
+  "warnings": [],
+  "authoritative_files_inspected": {
+    "2m_temperature": {
+      "path": "data\\processed\\source_extracted\\era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_variables": [
+        "d2m",
+        "t2m"
+      ],
+      "timesteps": 61368
+    },
+    "pressure_precipitation": {
+      "path": "data\\processed\\source_extracted\\era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_variables": [
+        "sp",
+        "tp"
+      ],
+      "timesteps": 61368
+    },
+    "wind": {
+      "path": "data\\processed\\source_extracted\\era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_variables": [
+        "u10",
+        "v10"
+      ],
+      "timesteps": 61368
+    }
+  }
+}

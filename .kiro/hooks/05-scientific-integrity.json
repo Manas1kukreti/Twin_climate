@@ -1,0 +1,27 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin data integrity review",
+      "description": "Review critical data-pipeline changes for leakage and provenance problems.",
+      "enabled": true,
+      "trigger": "PostFileSave",
+      "matcher": "(^|[\\\\/])(src[\\\\/](preprocessing|dataset|config)\\.py|scripts[\\\\/]preprocess\\.py|configs[\\\\/]data\\.ya?ml)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Review the just-saved ClimateTwin data-pipeline file for scientific correctness. Review only; do not modify files in this hook. Check chronological train/validation/test ordering, no split overlap, train-only fitting of learned preprocessing, missing-value leakage, sequence input/target alignment, split-boundary leakage, stable feature/target ordering, station-safe multi-location sequences, sampling-interval validation, units, provenance, and inverse-transform compatibility. If the file affects pretraining data, also check target-location/test-period isolation. Report specific issues; if none are found, say that the review passed."
+      }
+    },
+    {
+      "name": "ClimateTwin experiment integrity review",
+      "description": "Review model, training, evaluation, rollout, and scenario changes for research validity.",
+      "enabled": true,
+      "trigger": "PostFileSave",
+      "matcher": "(^|[\\\\/])(src[\\\\/](train|evaluate|forecasting|scenario)\\.py|src[\\\\/]models[\\\\/].*\\.py|scripts[\\\\/](train_lstm|train_transformer|pretrain|finetune|evaluate|generate_figures)\\.py|configs[\\\\/](lstm|transformer|pretrain|finetune)\\.ya?ml)$",
+      "action": {
+        "type": "agent",
+        "prompt": "Review the just-saved ClimateTwin experiment-related file. Review only; do not modify files in this hook. Check output/target schema consistency, reproducibility/seed handling, fair scratch-vs-transfer comparison, checkpoint/config compatibility, documented scaler policy, original-unit per-variable MAE/RMSE, no mixed-unit physical aggregate metric, explicit autoregressive feature updates, no future-ground-truth leakage, required horizons 1/3/6/12/24 where applicable, ACC only with a justified climatology, non-causal scenario wording, and no fabricated or placeholder results. Report concrete issues or state that the review passed."
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+# ── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+*.so
+
+# ── Virtual environments ───────────────────────────────────────────────
+.venv/
+env/
+venv/
+
+# ── Large / generated data ─────────────────────────────────────────────
+data/raw/
+data/processed/
+
+# ── Model checkpoints & predictions (can be large) ─────────────────────
+results/checkpoints/
+results/predictions/
+
+# ── Secrets & credentials ──────────────────────────────────────────────
+.env
+.cdsapirc
+*.key
+*.pem
+
+# ── IDE / editor ───────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS artifacts ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Jupyter checkpoints ───────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── Misc ───────────────────────────────────────────────────────────────
+*.log
+
+# ── pytest temp ────────────────────────────────────────────────────────
+.pytest_tmp/
+.pytest_cache/
+
+# Figures/images (excluded per request)
+results/figures/
+
+# Downloaded dependency artifacts (not project code)
+downloads/

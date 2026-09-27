@@ -1,0 +1,123 @@
+# ClimateTwin — Data Configuration
+# All production-preprocessing decisions are now RESOLVED.
+# Only pretraining geography and scenario perturbable_features remain unresolved.
+
+# --- Dataset identity ---
+source: "ERA5-Land hourly time-series"
+source_type: "reanalysis_grid_cell"
+dataset_id: "reanalysis-era5-land-timeseries"
+dataset_doi: "10.24381/ee82e357"
+license: "CC-BY 4.0"
+
+# --- Target location ---
+target_location: "Delhi"
+requested_latitude: 28.61
+requested_longitude: 77.21
+returned_latitude: 28.60    # actual nearest 0.1° grid point
+returned_longitude: 77.20   # actual nearest 0.1° grid point
+
+# --- Variables (CDS request names) ---
+variables:
+  - "2m_temperature"
+  - "2m_dewpoint_temperature"
+  - "surface_pressure"
+  - "total_precipitation"
+  - "10m_u_component_of_wind"
+  - "10m_v_component_of_wind"
+
+# --- NetCDF short names (returned by CDS) — canonical ordered feature list ---
+feature_order:
+  - "t2m"
+  - "d2m"
+  - "sp"
+  - "tp"
+  - "u10"
+  - "v10"
+
+netcdf_short_names:
+  "2m_temperature": "t2m"
+  "2m_dewpoint_temperature": "d2m"
+  "surface_pressure": "sp"
+  "total_precipitation": "tp"
+  "10m_u_component_of_wind": "u10"
+  "10m_v_component_of_wind": "v10"
+
+# --- Native units ---
+native_units:
+  t2m: "K"
+  d2m: "K"
+  sp: "Pa"
+  tp: "m"
+  u10: "m s**-1"
+  v10: "m s**-1"
+
+# --- Converted units (used in processed data) ---
+converted_units:
+  t2m: "°C"
+  d2m: "°C"
+  sp: "hPa"
+  tp: "mm"
+  u10: "m/s"
+  v10: "m/s"
+
+# --- Temporal coverage ---
+sampling_interval: "1h"
+time_range:
+  start: "2018-01-01"
+  end: "2024-12-31"
+actual_timestamp_start: "2018-01-01T00:00:00"
+actual_timestamp_end: "2024-12-31T23:00:00"
+total_timesteps: 61368
+
+# --- Authoritative file locations ---
+raw_archives_dir: "data/raw/era5land"
+extracted_netcdf_dir: "data/processed/source_extracted"
+
+# --- Target schema (§9.13 RESOLVED) ---
+# All six dynamic climate variables are both inputs and next-step targets.
+# n_features = 6, n_targets = 6
+# Metadata columns (timestamp, lat, lon) are NOT targets.
+n_features: 6
+n_targets: 6
+target_variables:
+  - "t2m"
+  - "d2m"
+  - "sp"
+  - "tp"
+  - "u10"
+  - "v10"
+
+# --- Input window (§9.7 RESOLVED) ---
+# 24 hourly timesteps = previous 24 hours → predict next hourly climate state
+# X shape: (24, 6), y shape: (6,)
+input_window: 24
+
+# --- Chronological split (§9.5 RESOLVED) ---
+split:
+  train:
+    start: "2018-01-01T00:00:00"
+    end:   "2022-12-31T23:00:00"
+  validation:
+    start: "2023-01-01T00:00:00"
+    end:   "2023-12-31T23:00:00"
+  test:
+    start: "2024-01-01T00:00:00"
+    end:   "2024-12-31T23:00:00"
+
+# --- Normalization (§9.14 RESOLVED for target-location) ---
+# StandardScaler fitted ONLY on Delhi training split (2018-2022).
+# Applied unchanged to validation and test.
+# Pretraining stage must use a SEPARATE scaler fitted on pretraining-training data.
+scaler_type: "StandardScaler"
+scaler_fit_period: "2018-01-01T00:00:00 to 2022-12-31T23:00:00"
+normalization_policy: "train_only_target_location"
+
+# --- Feature representation (RESOLVED) ---
+# No derived features: no relative humidity, no scalar wind speed.
+# Primary features are: t2m, d2m, sp, tp, u10, v10
+derived_features: []
+
+# --- Still UNRESOLVED ---
+perturbable_features: []   # UNRESOLVED: subset for scenario controls (Phase 13)
+# Pretraining geography: UNRESOLVED (Phase 8)
+# ACC feasibility: UNRESOLVED (Phase 6)

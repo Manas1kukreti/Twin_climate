@@ -1,0 +1,30 @@
+# ClimateTwin — LSTM Configuration (§9.11 RESOLVED)
+# Primary LSTM experiment — no hyperparameter search.
+
+n_features: 6
+n_targets: 6
+input_window: 24
+
+hidden_dim: 64
+num_layers: 2
+dropout: 0.1
+
+batch_size: 256
+learning_rate: 0.001
+optimizer: "Adam"
+loss: "MSE"
+epochs: 100
+
+early_stopping:
+  enabled: true
+  patience: 10
+  monitor: "val_loss"
+  mode: "min"
+
+seed: 42
+device: "auto"
+
+checkpoint_dir: "results/checkpoints"
+metrics_dir: "results/metrics"
+predictions_dir: "results/predictions"
+manifests_dir: "results/manifests"

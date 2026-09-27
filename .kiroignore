@@ -1,0 +1,43 @@
+# Large climate data
+data/raw/
+data/processed/
+
+# Model checkpoints
+results/checkpoints/
+
+# Large prediction artifacts
+results/predictions/
+
+# Binary climate formats
+*.nc
+*.grib
+*.grib2
+
+# Model binaries
+*.pt
+*.pth
+*.ckpt
+
+# Virtual environments
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Notebook caches
+.ipynb_checkpoints/
+
+# Secrets
+.env
+.env.*
+.cdsapirc
+*.key
+*.pem
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/

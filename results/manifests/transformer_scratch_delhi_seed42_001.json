@@ -1,0 +1,106 @@
+{
+  "run_id": "transformer_scratch_delhi_seed42_001",
+  "stage": "scratch",
+  "model": "transformer",
+  "seed": 42,
+  "device": "cuda",
+  "dataset": {
+    "source": "ERA5-Land hourly time-series",
+    "source_type": "reanalysis_grid_cell",
+    "target_location": "Delhi",
+    "variables": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "target_variables": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "units": {
+      "t2m": "\u00b0C",
+      "d2m": "\u00b0C",
+      "sp": "hPa",
+      "tp": "mm",
+      "u10": "m/s",
+      "v10": "m/s"
+    },
+    "sampling_interval": "1h",
+    "train_period": "2018-01-01T00:00:00 to 2022-12-31T23:00:00",
+    "validation_period": "2023-01-01T00:00:00 to 2023-12-31T23:00:00",
+    "test_period": "2024-01-01T00:00:00 to 2024-12-31T23:00:00"
+  },
+  "preprocessing": {
+    "scaler_type": "StandardScaler",
+    "scaler_path": "data/processed/scaler.joblib",
+    "feature_order": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "input_window": 24,
+    "normalization_policy": "train_only_target_location"
+  },
+  "model_config": {
+    "n_features": 6,
+    "n_targets": 6,
+    "d_model": 128,
+    "nhead": 4,
+    "num_encoder_layers": 3,
+    "dim_feedforward": 256,
+    "dropout": 0.1,
+    "parameter_count": 399110,
+    "positional_encoding": "sinusoidal"
+  },
+  "training_config": {
+    "best_epoch": 8,
+    "wall_clock_seconds": 153.74,
+    "total_epochs": 18,
+    "best_val_loss": 0.09021812682705266,
+    "optimizer": "Adam",
+    "learning_rate": 0.0005,
+    "batch_size": 256,
+    "loss": "MSE",
+    "early_stopping_patience": 10,
+    "gpu": "NVIDIA GeForce RTX 2050",
+    "torch_version": "2.13.0+cu126",
+    "cuda_version": "12.6"
+  },
+  "hyperparameter_selection": {
+    "method": "single primary configuration per \u00a79.6",
+    "candidates_evaluated": [
+      {
+        "d_model": 128,
+        "nhead": 4,
+        "num_encoder_layers": 3,
+        "dim_feedforward": 256,
+        "dropout": 0.1,
+        "learning_rate": 0.0005
+      }
+    ],
+    "selection_rationale": "Primary configuration as approved, no search conducted."
+  },
+  "checkpoint_path": "results\\checkpoints\\transformer_scratch_delhi_seed42_001.pt",
+  "metrics_path": "results\\metrics\\transformer_scratch_delhi_metrics.json",
+  "predictions_path": "results\\predictions\\transformer_scratch_delhi_predictions.csv",
+  "figures": [],
+  "software": {
+    "python": "3.14.5",
+    "pytorch": "2.13.0+cu126",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0"
+  },
+  "git_commit": null,
+  "created_at": "2026-08-31T21:11:42.500712+00:00"
+}

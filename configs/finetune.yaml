@@ -1,0 +1,25 @@
+# ClimateTwin — Fine-Tuning Configuration
+# UNRESOLVED fields will be populated during Phase 9 (fine-tuning setup).
+
+pretrain_checkpoint: null  # path to validated pretrain checkpoint
+target_location: "UNRESOLVED"
+
+normalization_policy: "UNRESOLVED: see §9.14"
+scaler_path: null          # which scaler to use for fine-tuning
+
+learning_rate: null        # typically smaller than pretrain LR
+batch_size: null
+epochs: null
+
+early_stopping:
+  patience: null
+  metric: "val_loss"
+
+frozen_layers: []          # document frozen/unfrozen/reinitialized
+unfrozen_layers: []
+reinitialized_layers: []
+
+seed: 42
+device: "auto"
+
+checkpoint_dir: "results/checkpoints"

@@ -1,0 +1,67 @@
+{
+  "model": "persistence",
+  "source_dataset": "reanalysis-era5-land-timeseries",
+  "location": "Delhi",
+  "test_period": {
+    "start": "2024-01-01 00:00:00",
+    "end": "2024-12-31 23:00:00"
+  },
+  "input_window_alignment_policy": "Persistence skips first 24 rows of test split to align with learned models using the same input_window.",
+  "input_window": 24,
+  "n_evaluated_samples": 8760,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.94426092,
+      "rmse": 1.2729275388868309
+    },
+    "d2m": {
+      "mae": 0.4140006896719178,
+      "rmse": 0.6883188206561703
+    },
+    "sp": {
+      "mae": 0.4113061255707765,
+      "rmse": 0.5043727475418126
+    },
+    "tp": {
+      "mae": 0.07354513273646592,
+      "rmse": 0.3841330792819837
+    },
+    "u10": {
+      "mae": 0.31815032309383556,
+      "rmse": 0.47777736240542046
+    },
+    "v10": {
+      "mae": 0.32906379755353876,
+      "rmse": 0.4716503440295256
+    }
+  },
+  "timestamp_range": {
+    "first": "2024-01-02T00:00:00.000000",
+    "last": "2024-12-31T23:00:00.000000"
+  },
+  "evaluation_date": "2026-08-31T17:07:33.633114+00:00"
+}

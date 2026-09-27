@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "ClimateTwin pre-task scientific gate",
+      "description": "Check scientific prerequisites before a Kiro Spec task starts.",
+      "enabled": true,
+      "trigger": "PreTaskExec",
+      "action": {
+        "type": "agent",
+        "prompt": "Before executing this ClimateTwin spec task, read the active task, workspace steering, and relevant upstream artifacts. Verify that every required prerequisite actually exists and is valid. Do not treat code capable of generating an artifact as if the artifact already exists. Do not fabricate datasets, checkpoints, metrics, predictions, figures, manifests, or experimental outcomes. Check unresolved design decisions that this task depends on. For data/model tasks, verify chronological integrity and train-only preprocessing requirements. For transfer-learning tasks, verify target-location/test-period contamination safeguards and the documented normalization policy. If a prerequisite is missing, failed, unresolved, or scientifically inconsistent, do not continue the dependent work; report the blocker clearly. Do not modify files merely to make the gate pass."
+      }
+    }
+  ]
+}
