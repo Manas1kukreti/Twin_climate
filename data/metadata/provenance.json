@@ -9,17 +9,14 @@
     "latitude": 28.61,
     "longitude": 77.21
   },
-  "actual_returned_location": {
-    "latitude": 28.6,
-    "longitude": 77.2
-  },
+  "actual_returned_location": "PENDING \u2014 inspect extracted NetCDF",
   "requested_period": {
     "start": "2018-01-01",
     "end": "2024-12-31"
   },
-  "actual_first_timestamp": "2018-01-01T00:00:00",
-  "actual_last_timestamp": "2024-12-31T23:00:00",
-  "validated_sampling_interval": "1h",
+  "actual_first_timestamp": "PENDING \u2014 inspect extracted NetCDF",
+  "actual_last_timestamp": "PENDING \u2014 inspect extracted NetCDF",
+  "validated_sampling_interval": "PENDING \u2014 inspect extracted NetCDF",
   "variable_request_names": [
     "2m_temperature",
     "2m_dewpoint_temperature",
@@ -28,22 +25,8 @@
     "10m_u_component_of_wind",
     "10m_v_component_of_wind"
   ],
-  "returned_netcdf_short_names": {
-    "2m_temperature": "t2m",
-    "2m_dewpoint_temperature": "d2m",
-    "surface_pressure": "sp",
-    "total_precipitation": "tp",
-    "10m_u_component_of_wind": "u10",
-    "10m_v_component_of_wind": "v10"
-  },
-  "units": {
-    "t2m": "K",
-    "d2m": "K",
-    "sp": "Pa",
-    "tp": "m",
-    "u10": "m s**-1",
-    "v10": "m s**-1"
-  },
+  "returned_netcdf_short_names": "PENDING \u2014 inspect extracted NetCDF",
+  "units": "PENDING \u2014 inspect extracted NetCDF",
   "cds_request_parameters": {
     "dataset": "reanalysis-era5-land-timeseries",
     "data_format": "netcdf",
@@ -54,7 +37,7 @@
     "date_range": "2018-01-01/2024-12-31",
     "note": "credentials excluded"
   },
-  "retrieval_date": "2026-08-31",
+  "retrieval_date": "2026-09-27",
   "is_pilot": false,
   "raw_files": [
     {
@@ -64,15 +47,15 @@
         "2m_dewpoint_temperature"
       ],
       "zip_filename": "era5land_2m_temperature_2018-01-01_2024-12-31.zip",
-      "zip_path": "data\\raw\\era5land\\era5land_2m_temperature_2018-01-01_2024-12-31.zip",
+      "zip_path": "data/raw/era5land/era5land_2m_temperature_2018-01-01_2024-12-31.zip",
       "zip_size_bytes": 1002973,
-      "zip_sha256": "94adcf57ee2172239a98fc6c71a180eab8add6c09e2af3c45d7454848c5edb73",
+      "zip_sha256": "e2d421030094864cb4dbcd4844a52762148e198aa67fe8d972a7c0fbe05f9b45",
       "nc_filename": "era5land_2m_temperature_2018-01-01_2024-12-31.nc",
-      "nc_path": "data\\processed\\source_extracted\\era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_path": "data/processed/source_extracted/era5land_2m_temperature_2018-01-01_2024-12-31.nc",
       "nc_size_bytes": 1002598,
       "nc_sha256": "7faccd6c8399134920a956965f3083b87243d8f3597071d508e359a88799884b",
       "extracted_from": "era5land_2m_temperature_2018-01-01_2024-12-31.zip",
-      "retrieved_at": "2026-08-31T15:12:53.717623+00:00"
+      "retrieved_at": "2026-09-27T10:35:45.639442+00:00"
     },
     {
       "group": "pressure_precipitation",
@@ -81,15 +64,15 @@
         "total_precipitation"
       ],
       "zip_filename": "era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
-      "zip_path": "data\\raw\\era5land\\era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
+      "zip_path": "data/raw/era5land/era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
       "zip_size_bytes": 1003004,
-      "zip_sha256": "7f51d296370aa69be9b293e287e8c5d25182dc3f841e049188861dca403003c0",
+      "zip_sha256": "012b1a0e31eb0f6b90cbfdc4b8c24aed68a4328597980c283bb6a3d7b3064839",
       "nc_filename": "era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
-      "nc_path": "data\\processed\\source_extracted\\era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_path": "data/processed/source_extracted/era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
       "nc_size_bytes": 1002613,
       "nc_sha256": "01367a811b9b2b8e3fb09ff6ca9810fc79a55e62f430dbf90835bf9f39ea63dc",
       "extracted_from": "era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
-      "retrieved_at": "2026-08-31T15:13:53.275942+00:00"
+      "retrieved_at": "2026-09-27T10:36:34.445783+00:00"
     },
     {
       "group": "wind",
@@ -98,41 +81,23 @@
         "10m_v_component_of_wind"
       ],
       "zip_filename": "era5land_wind_2018-01-01_2024-12-31.zip",
-      "zip_path": "data\\raw\\era5land\\era5land_wind_2018-01-01_2024-12-31.zip",
+      "zip_path": "data/raw/era5land/era5land_wind_2018-01-01_2024-12-31.zip",
       "zip_size_bytes": 1002943,
-      "zip_sha256": "1a07950bee3ee2e7615a79538a94f7d3a97c41f3887b866a09ec12cfb716d273",
+      "zip_sha256": "e6c161860141e70fa53e6a2684a3098751eef2a9837194eed71163ac7c1ad638",
       "nc_filename": "era5land_wind_2018-01-01_2024-12-31.nc",
-      "nc_path": "data\\processed\\source_extracted\\era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_path": "data/processed/source_extracted/era5land_wind_2018-01-01_2024-12-31.nc",
       "nc_size_bytes": 1002588,
       "nc_sha256": "7dc3a1b33885d18856df9dc032257c32672c9b9aebc2b9d361c437e65a60f4aa",
       "extracted_from": "era5land_wind_2018-01-01_2024-12-31.zip",
-      "retrieved_at": "2026-08-31T15:14:36.749570+00:00"
+      "retrieved_at": "2026-09-27T10:37:29.725744+00:00"
     }
   ],
   "software_versions": {
-    "python": "3.14.5",
-    "cdsapi": "0.7.7",
+    "python": "3.13.2",
+    "cdsapi": "unknown",
     "xarray": "2026.7.0",
-    "numpy": "2.5.2",
-    "pandas": "3.0.5",
-    "torch": "2.13.0+cpu"
-  },
-  "validation_summary": {
-    "total_timesteps": 61368,
-    "expected_timesteps": 61368,
-    "irregular_intervals": 0,
-    "duplicate_timestamps": 0,
-    "nan_count_per_variable": {
-      "t2m": 0,
-      "d2m": 0,
-      "sp": 0,
-      "tp": 0,
-      "u10": 0,
-      "v10": 0
-    },
-    "cross_file_timestamp_consistency": true,
-    "precipitation_negative_count": 1132,
-    "precipitation_negative_min_m": -3.55e-08,
-    "precipitation_negative_note": "Tiny negative values are a known ERA5-Land numerical artifact"
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "torch": "2.14.0"
   }
 }

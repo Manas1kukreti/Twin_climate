@@ -246,8 +246,8 @@ def main(config_path: str = "configs/data.yaml", pilot_days: int | None = None) 
 
     # Load configuration
     config = load_config(config_path)
-    latitude = config.get("latitude")
-    longitude = config.get("longitude")
+    latitude = config.get("latitude", config.get("requested_latitude"))
+    longitude = config.get("longitude", config.get("requested_longitude"))
     time_range = config.get("time_range", {})
     start_date = str(time_range.get("start"))
     end_date = str(time_range.get("end"))

@@ -117,7 +117,13 @@ normalization_policy: "train_only_target_location"
 # Primary features are: t2m, d2m, sp, tp, u10, v10
 derived_features: []
 
-# --- Still UNRESOLVED ---
-perturbable_features: []   # UNRESOLVED: subset for scenario controls (Phase 13)
+# --- Scenario perturbable features (Phase 13 RESOLVED) ---
+# Subset of feature_order exposed as user-facing what-if controls.
+# Chosen for intuitive interpretation: temperature, dewpoint, pressure.
+# Wind components (u10/v10) are excluded as they are less demo-legible.
+perturbable_features:
+  - "t2m"
+  - "d2m"
+  - "sp"
 # Pretraining geography: UNRESOLVED (Phase 8)
 # ACC feasibility: UNRESOLVED (Phase 6)

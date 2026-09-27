@@ -61,9 +61,9 @@
   },
   "training_config": {
     "best_epoch": 21,
-    "wall_clock_seconds": 271.76,
+    "wall_clock_seconds": 171.24,
     "total_epochs": 31,
-    "best_val_loss": 0.0888464085225548,
+    "best_val_loss": 0.08884662170229214,
     "optimizer": "Adam",
     "learning_rate": 0.001,
     "batch_size": 256,
@@ -82,17 +82,17 @@
     ],
     "selection_rationale": "Primary configuration as approved, no search conducted."
   },
-  "checkpoint_path": "results\\checkpoints\\lstm_delhi_seed42_001.pt",
-  "metrics_path": "results\\metrics\\lstm_delhi_metrics.json",
-  "predictions_path": "results\\predictions\\lstm_delhi_predictions.csv",
+  "checkpoint_path": "results/checkpoints/lstm_delhi_seed42_001.pt",
+  "metrics_path": "results/metrics/lstm_delhi_metrics.json",
+  "predictions_path": "results/predictions/lstm_delhi_predictions.csv",
   "figures": [],
   "software": {
-    "python": "3.14.5",
-    "pytorch": "2.13.0+cpu",
-    "numpy": "2.5.2",
-    "pandas": "3.0.5",
-    "scikit-learn": "1.9.0"
+    "python": "3.13.2",
+    "pytorch": "2.14.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1"
   },
-  "git_commit": null,
-  "created_at": "2026-08-31T17:42:56.149204+00:00"
+  "git_commit": "3f85555",
+  "created_at": "2026-09-27T10:42:46.536195+00:00"
 }
