@@ -1,0 +1,57 @@
+{
+  "synthetic": false,
+  "provider": "Copernicus Climate Change Service (C3S) / ECMWF",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "dataset_doi": "10.24381/ee82e357",
+  "license": "CC-BY 4.0",
+  "city": "Chennai",
+  "slug": "chennai",
+  "requested_location": {
+    "latitude": 13.08,
+    "longitude": 80.2
+  },
+  "requested_period": {
+    "start": "2018-01-01",
+    "end": "2024-12-31"
+  },
+  "is_pilot": false,
+  "raw_files": [
+    {
+      "group": "2m_temperature",
+      "variables_cds_request": [
+        "2m_temperature",
+        "2m_dewpoint_temperature"
+      ],
+      "zip_path": "data/raw/era5land/chennai/era5land_2m_temperature_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "7a698adcdafdbda33937cbf939ce08ef7d69533739d142b6327908859f0f2401",
+      "nc_path": "data/processed/source_extracted/chennai/era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "9466f1266ff0042759e81d583c49a0746a125acad57192efd7b80a27b1bfde79",
+      "retrieved_at": "2026-09-29T14:14:43.630063+00:00"
+    },
+    {
+      "group": "pressure_precipitation",
+      "variables_cds_request": [
+        "surface_pressure",
+        "total_precipitation"
+      ],
+      "zip_path": "data/raw/era5land/chennai/era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "65d03ea2475c62d74f9e666b64c18df8580fbda8ba717a29b71a5bacd093596f",
+      "nc_path": "data/processed/source_extracted/chennai/era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "d328703e050c1c4df1cfcad1858283fbda8c5703d552a6c32e2c0b4ff5b3b240",
+      "retrieved_at": "2026-09-29T14:15:57.036319+00:00"
+    },
+    {
+      "group": "wind",
+      "variables_cds_request": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "zip_path": "data/raw/era5land/chennai/era5land_wind_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "76eda7952afc65ac0cbb28deb8b9537d7d8ca5fac82742bad5b7946690eb7287",
+      "nc_path": "data/processed/source_extracted/chennai/era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "43b550be5f97e7b96314efd66495343818e41424ae81fde46f28e8db528087f5",
+      "retrieved_at": "2026-09-29T14:17:32.396138+00:00"
+    }
+  ],
+  "retrieval_date": "2026-09-29"
+}

@@ -15,6 +15,7 @@ venv/
 # ── Large / generated data ─────────────────────────────────────────────
 data/raw/
 data/processed/
+data/climatetwin.db
 
 # ── Model checkpoints & predictions (can be large) ─────────────────────
 results/checkpoints/

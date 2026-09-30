@@ -48,9 +48,25 @@ logger = logging.getLogger(__name__)
 def main(
     config_data_path: str = "configs/data.yaml",
     config_model_path: str = "configs/lstm.yaml",
+    city_slug: str | None = None,
 ) -> None:
-    """Train ClimateLSTM and evaluate on test set."""
+    """Train ClimateLSTM and evaluate on test set.
+
+    Parameters
+    ----------
+    config_data_path, config_model_path : str
+        Data and model YAML config paths.
+    city_slug : str, optional
+        When set to a non-primary city, all input data and output artifact
+        paths are resolved per-city via ``src.cities``. When ``None`` or the
+        primary city (Delhi), the original single-city paths and artifact
+        names are used unchanged.
+    """
     setup_logging("INFO")
+
+    from src.cities import get_city, primary_city
+
+    city = primary_city() if city_slug is None else get_city(city_slug)
 
     data_cfg = load_config(config_data_path)
     model_cfg = load_config(config_model_path)
@@ -83,9 +99,12 @@ def main(
     # --- Seed ---
     set_global_seed(seed)
 
-    # --- Load data ---
-    train_df = pd.read_csv("data/processed/train_scaled.csv")
-    val_df = pd.read_csv("data/processed/val_scaled.csv")
+    logger.info("Training city: %s (%s)", city.name,
+                "primary" if city.is_primary else city.slug)
+
+    # --- Load data (per-city paths; primary city keeps original locations) ---
+    train_df = pd.read_csv(city.split_csv("train", scaled=True))
+    val_df = pd.read_csv(city.split_csv("val", scaled=True))
 
     train_data = train_df[feature_order].values.astype(np.float32)
     val_data = val_df[feature_order].values.astype(np.float32)
@@ -117,9 +136,8 @@ def main(
     train_losses: list[float] = []
     val_losses: list[float] = []
 
-    ckpt_dir = Path(model_cfg["checkpoint_dir"])
-    ckpt_dir.mkdir(parents=True, exist_ok=True)
-    ckpt_path = ckpt_dir / "lstm_delhi_seed42_001.pt"
+    ckpt_path = city.checkpoint_path
+    ckpt_path.parent.mkdir(parents=True, exist_ok=True)
 
     wall_start = time.time()
 
@@ -217,7 +235,7 @@ def main(
         "val_sequences": len(val_ds),
     }
 
-    log_path = Path(model_cfg["metrics_dir"]) / "lstm_delhi_training_log.json"
+    log_path = city.training_log_path
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with open(log_path, "w") as f:
         json.dump(training_log, f, indent=2)
@@ -231,9 +249,9 @@ def main(
     model.eval()
     logger.info("Loaded best checkpoint from epoch %d", best_epoch)
 
-    # Load test data
-    test_scaled_df = pd.read_csv("data/processed/test_scaled.csv")
-    test_unscaled_df = pd.read_csv("data/processed/test.csv", parse_dates=["timestamp"])
+    # Load test data (per-city paths)
+    test_scaled_df = pd.read_csv(city.split_csv("test", scaled=True))
+    test_unscaled_df = pd.read_csv(city.split_csv("test", scaled=False), parse_dates=["timestamp"])
     test_data = test_scaled_df[feature_order].values.astype(np.float32)
 
     test_ds = ClimateSequenceDataset(
@@ -254,11 +272,18 @@ def main(
     preds_scaled = np.concatenate(all_preds, axis=0)
     targets_scaled = np.concatenate(all_targets, axis=0)
 
-    logger.info("Test predictions: %d samples", preds_scaled.shape[0])
-    assert preds_scaled.shape[0] == 8760, f"Expected 8760, got {preds_scaled.shape[0]}"
+    # Expected sequence count is derived from the test split, not hard-coded:
+    # one sequence per timestep after the initial input_window rows.
+    expected_samples = len(test_scaled_df) - input_window
+    logger.info("Test predictions: %d samples (expected %d)",
+                preds_scaled.shape[0], expected_samples)
+    assert preds_scaled.shape[0] == expected_samples, (
+        f"Expected {expected_samples} sequences for {city.slug}, "
+        f"got {preds_scaled.shape[0]}"
+    )
 
-    # Inverse transform to physical units
-    scaler, scaler_features, _ = load_scaler("data/processed/scaler.joblib")
+    # Inverse transform to physical units (per-city scaler)
+    scaler, scaler_features, _ = load_scaler(city.scaler_path)
     assert scaler_features == feature_order, "Scaler feature order mismatch!"
 
     preds_physical = inverse_transform_predictions(preds_scaled, scaler, feature_order)
@@ -266,7 +291,7 @@ def main(
 
     # Timestamps: target timestamps start at row input_window of test split
     test_timestamps = test_unscaled_df["timestamp"].values[input_window:]
-    assert len(test_timestamps) == 8760
+    assert len(test_timestamps) == expected_samples
 
     # Per-variable metrics
     converted_units = data_cfg["converted_units"]
@@ -278,14 +303,20 @@ def main(
         m = metrics[var]
         logger.info("  %s: MAE=%.4f %s, RMSE=%.4f %s", var, m["mae"], unit, m["rmse"], unit)
 
-    # Persistence comparison
+    # Persistence comparison.
+    # Persistence = "next hour equals this hour". We compute its per-variable
+    # RMSE directly from THIS city's test targets (consecutive true values),
+    # rather than a hard-coded Delhi baseline, so every city is scored against
+    # its own naive baseline. RMSE( targets[1:], targets[:-1] ) per variable.
+    persist_pred = targets_physical[:-1]
+    persist_true = targets_physical[1:]
     persistence_rmse = {
-        "t2m": 1.2729, "d2m": 0.6883, "sp": 0.5044,
-        "tp": 0.3841, "u10": 0.4778, "v10": 0.4717,
+        var: float(np.sqrt(np.mean((persist_true[:, i] - persist_pred[:, i]) ** 2)))
+        for i, var in enumerate(feature_order)
     }
     comparison: dict = {}
     for var in feature_order:
-        p_rmse = persistence_rmse[var]
+        p_rmse = round(persistence_rmse[var], 4)
         l_rmse = metrics[var]["rmse"]
         abs_diff = p_rmse - l_rmse
         pct_change = 100.0 * abs_diff / p_rmse if p_rmse > 0 else 0.0
@@ -305,14 +336,14 @@ def main(
         pred_df[f"actual_{var}"] = targets_physical[:, i]
         pred_df[f"pred_{var}"] = preds_physical[:, i]
 
-    pred_path = Path(model_cfg["predictions_dir"]) / "lstm_delhi_predictions.csv"
+    pred_path = city.predictions_path
     pred_path.parent.mkdir(parents=True, exist_ok=True)
     pred_df.to_csv(pred_path, index=False)
     logger.info("Predictions: %s", pred_path)
 
     # --- Save metrics ---
     metrics_doc = {
-        "run_id": "lstm_scratch_delhi_seed42_001",
+        "run_id": city.run_id,
         "model": "lstm",
         "parameter_count": param_count,
         "seed": seed,
@@ -325,18 +356,22 @@ def main(
         "best_val_loss": best_val_loss,
         "wall_clock_seconds": round(wall_seconds, 2),
         "test_sample_count": int(preds_scaled.shape[0]),
+        "city": city.name,
+        "city_slug": city.slug,
+        "latitude": city.latitude,
+        "longitude": city.longitude,
         "per_variable_metrics": metrics,
         "units": converted_units,
         "persistence_comparison": comparison,
         "evaluation_date": datetime.now(UTC).isoformat(),
     }
 
-    metrics_path = Path(model_cfg["metrics_dir"]) / "lstm_delhi_metrics.json"
+    metrics_path = city.metrics_path
     save_metrics(metrics_doc, metrics_path)
 
     # --- Save manifest ---
     manifest = create_manifest(
-        run_id="lstm_scratch_delhi_seed42_001",
+        run_id=city.run_id,
         stage="scratch",
         model="lstm",
         seed=seed,
@@ -344,7 +379,7 @@ def main(
         dataset={
             "source": data_cfg["source"],
             "source_type": data_cfg["source_type"],
-            "target_location": data_cfg["target_location"],
+            "target_location": city.name,
             "variables": feature_order,
             "target_variables": feature_order,
             "units": converted_units,
@@ -364,7 +399,7 @@ def main(
         },
         preprocessing={
             "scaler_type": data_cfg["scaler_type"],
-            "scaler_path": "data/processed/scaler.joblib",
+            "scaler_path": str(city.scaler_path.relative_to(PROJECT_ROOT)),
             "feature_order": feature_order,
             "input_window": input_window,
             "normalization_policy": data_cfg["normalization_policy"],
@@ -405,7 +440,8 @@ def main(
         predictions_path=str(pred_path),
     )
 
-    manifest_path = Path(model_cfg["manifests_dir"]) / "lstm_scratch_delhi_seed42_001.json"
+    manifest_path = city.manifest_path
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     save_manifest(manifest, manifest_path)
 
     logger.info("=== Phase 4 artifacts saved ===")
@@ -422,5 +458,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train ClimateLSTM")
     parser.add_argument("--config-data", default="configs/data.yaml")
     parser.add_argument("--config-model", default="configs/lstm.yaml")
+    parser.add_argument(
+        "--city", default=None,
+        help="City slug (default: primary city / Delhi with original artifact names)",
+    )
     args = parser.parse_args()
-    main(args.config_data, args.config_model)
+    main(args.config_data, args.config_model, args.city)

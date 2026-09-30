@@ -1,0 +1,57 @@
+{
+  "synthetic": false,
+  "provider": "Copernicus Climate Change Service (C3S) / ECMWF",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "dataset_doi": "10.24381/ee82e357",
+  "license": "CC-BY 4.0",
+  "city": "Mumbai",
+  "slug": "mumbai",
+  "requested_location": {
+    "latitude": 19.08,
+    "longitude": 72.88
+  },
+  "requested_period": {
+    "start": "2018-01-01",
+    "end": "2024-12-31"
+  },
+  "is_pilot": false,
+  "raw_files": [
+    {
+      "group": "2m_temperature",
+      "variables_cds_request": [
+        "2m_temperature",
+        "2m_dewpoint_temperature"
+      ],
+      "zip_path": "data/raw/era5land/mumbai/era5land_2m_temperature_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "0422448264a2c34f3d5e93b4e05104bef1a1727317def75cae862cde25a8c484",
+      "nc_path": "data/processed/source_extracted/mumbai/era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "098e5dd1006c159e748668baafa13ee6276e759a89db0a119e6c27a3cfca924c",
+      "retrieved_at": "2026-09-29T13:11:15.899192+00:00"
+    },
+    {
+      "group": "pressure_precipitation",
+      "variables_cds_request": [
+        "surface_pressure",
+        "total_precipitation"
+      ],
+      "zip_path": "data/raw/era5land/mumbai/era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "ceadb68bd928a460092060a9741264a15a1394ab601151ebd1d0b96d12d0ae76",
+      "nc_path": "data/processed/source_extracted/mumbai/era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "1af87cf00ddb8e4d02056c0939620b9e8b8ff14a199b4194164cf4c06ee0242d",
+      "retrieved_at": "2026-09-29T13:12:13.884414+00:00"
+    },
+    {
+      "group": "wind",
+      "variables_cds_request": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "zip_path": "data/raw/era5land/mumbai/era5land_wind_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "95a50436370e9cba9acdd9e5774e501741cb23db9c4e5abb4a9c5ac59d25c93d",
+      "nc_path": "data/processed/source_extracted/mumbai/era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "ab60daf203133728a516f1a77c68477078342a6ce8aeb712275f75a4ce36e757",
+      "retrieved_at": "2026-09-29T13:13:07.794052+00:00"
+    }
+  ],
+  "retrieval_date": "2026-09-29"
+}

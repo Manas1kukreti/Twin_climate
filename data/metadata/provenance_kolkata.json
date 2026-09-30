@@ -1,0 +1,57 @@
+{
+  "synthetic": false,
+  "provider": "Copernicus Climate Change Service (C3S) / ECMWF",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "dataset_doi": "10.24381/ee82e357",
+  "license": "CC-BY 4.0",
+  "city": "Kolkata",
+  "slug": "kolkata",
+  "requested_location": {
+    "latitude": 22.57,
+    "longitude": 88.36
+  },
+  "requested_period": {
+    "start": "2018-01-01",
+    "end": "2024-12-31"
+  },
+  "is_pilot": false,
+  "raw_files": [
+    {
+      "group": "2m_temperature",
+      "variables_cds_request": [
+        "2m_temperature",
+        "2m_dewpoint_temperature"
+      ],
+      "zip_path": "data/raw/era5land/kolkata/era5land_2m_temperature_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "9ea2bb1e7ab0a99d8237edf4b957024d35c50ed9d8ce55aef568e9a63401facc",
+      "nc_path": "data/processed/source_extracted/kolkata/era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "0483c5c03c04e98f6cd55f11c2886b6cc5cb5af2ea9b42915e01d576d6b5f596",
+      "retrieved_at": "2026-09-29T13:17:45.651636+00:00"
+    },
+    {
+      "group": "pressure_precipitation",
+      "variables_cds_request": [
+        "surface_pressure",
+        "total_precipitation"
+      ],
+      "zip_path": "data/raw/era5land/kolkata/era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "ed232ec1efae2b5cb58f6ee7eaa149c87e4460d369d0c0c155785cc91c86596f",
+      "nc_path": "data/processed/source_extracted/kolkata/era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "a1933dd64b838b5cd945da390db048aaa8129874d993cdbb19f12e7c269f03a5",
+      "retrieved_at": "2026-09-29T13:21:26.440999+00:00"
+    },
+    {
+      "group": "wind",
+      "variables_cds_request": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "zip_path": "data/raw/era5land/kolkata/era5land_wind_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "2413b0114343384fb881ec2d1c5ee0d0e398f52a259e0e6aa818860f77ca9c28",
+      "nc_path": "data/processed/source_extracted/kolkata/era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "7733e4757fec80de42cdb9ba1893e718b91d49dd7911ad3dee00555f8735c2e2",
+      "retrieved_at": "2026-09-29T13:22:28.634935+00:00"
+    }
+  ],
+  "retrieval_date": "2026-09-29"
+}

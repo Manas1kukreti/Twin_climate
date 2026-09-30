@@ -1,0 +1,125 @@
+{
+  "run_id": "lstm_scratch_bengaluru_seed42_001",
+  "model": "lstm",
+  "parameter_count": 52102,
+  "seed": 42,
+  "input_window": 24,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "hyperparameters": {
+    "n_features": 6,
+    "n_targets": 6,
+    "input_window": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "max_epochs": 100,
+    "early_stopping_patience": 10
+  },
+  "training_epochs": 36,
+  "best_epoch": 26,
+  "best_val_loss": 0.060893124182309424,
+  "wall_clock_seconds": 197.1,
+  "test_sample_count": 8760,
+  "city": "Bengaluru",
+  "city_slug": "bengaluru",
+  "latitude": 12.97,
+  "longitude": 77.59,
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.35337528586387634,
+      "rmse": 0.49166837334632874
+    },
+    "d2m": {
+      "mae": 0.327062726020813,
+      "rmse": 0.48619723320007324
+    },
+    "sp": {
+      "mae": 0.22424085438251495,
+      "rmse": 0.29701340198516846
+    },
+    "tp": {
+      "mae": 0.11732186377048492,
+      "rmse": 0.3378852307796478
+    },
+    "u10": {
+      "mae": 0.28501805663108826,
+      "rmse": 0.4039028584957123
+    },
+    "v10": {
+      "mae": 0.20976008474826813,
+      "rmse": 0.30325984954833984
+    }
+  },
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "persistence_comparison": {
+    "t2m": {
+      "persistence_rmse": 1.0208,
+      "lstm_rmse": 0.4917,
+      "abs_diff": 0.5291,
+      "pct_improvement": 51.83,
+      "lstm_better": true
+    },
+    "d2m": {
+      "persistence_rmse": 0.6389,
+      "lstm_rmse": 0.4862,
+      "abs_diff": 0.1527,
+      "pct_improvement": 23.9,
+      "lstm_better": true
+    },
+    "sp": {
+      "persistence_rmse": 0.5813,
+      "lstm_rmse": 0.297,
+      "abs_diff": 0.2843,
+      "pct_improvement": 48.91,
+      "lstm_better": true
+    },
+    "tp": {
+      "persistence_rmse": 0.3881,
+      "lstm_rmse": 0.3379,
+      "abs_diff": 0.0502,
+      "pct_improvement": 12.94,
+      "lstm_better": true
+    },
+    "u10": {
+      "persistence_rmse": 0.4504,
+      "lstm_rmse": 0.4039,
+      "abs_diff": 0.0465,
+      "pct_improvement": 10.32,
+      "lstm_better": true
+    },
+    "v10": {
+      "persistence_rmse": 0.3491,
+      "lstm_rmse": 0.3033,
+      "abs_diff": 0.0458,
+      "pct_improvement": 13.13,
+      "lstm_better": true
+    }
+  },
+  "evaluation_date": "2026-09-29T14:27:56.225847+00:00"
+}

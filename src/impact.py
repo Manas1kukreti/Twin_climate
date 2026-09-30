@@ -271,3 +271,154 @@ def summarize_state(
         wind_alert=wind_alert,
         alerts=alerts,
     )
+
+
+# ---------------------------------------------------------------------------
+# Sector indicators (Phase: multi-city)
+# ---------------------------------------------------------------------------
+# These translate a forecast state into sector-relevant indicators for
+# agriculture, public health, and energy. As with the core impact layer, every
+# threshold is drawn from a standard, citable source and each indicator adds
+# *interpretation*, not predictive skill. They are informational, not official
+# advisories (see SECTOR_DISCLAIMER).
+#
+# Sources (thresholds paraphrased for compliance):
+# - Crop heat stress: cardinal temperatures for cereals. Wheat grain-set is
+#   impaired above ~34 C and severely above ~38 C; many C4/tropical cereals
+#   (rice, maize) show heat stress in the mid-30s C during sensitive stages.
+#   Ref: FAO crop-ecology guidance and Hatfield & Prueger (2015),
+#   "Temperature extremes: Effect on plant growth and development".
+# - Heat-health caution: NOAA/NWS Heat Index caution bands
+#   (Caution >= 27 C, Extreme Caution >= 32 C, Danger >= 41 C,
+#    Extreme Danger >= 54 C apparent temperature).
+#   https://www.weather.gov/safety/heat-index
+# - Cooling demand: Cooling Degree Hours relative to an 18 C base temperature,
+#   the conventional base for building energy-demand estimation (ASHRAE).
+
+SECTOR_DISCLAIMER: str = (
+    "Sector indicators (agriculture, health, energy) apply standard published "
+    "thresholds (FAO/Hatfield crop cardinal temperatures, NOAA Heat Index "
+    "caution bands, ASHRAE 18 C cooling base) to model forecasts. They are "
+    "informational interpretations, not official agronomic, medical, or "
+    "utility advisories."
+)
+
+
+def crop_heat_stress(t2m_c: float) -> tuple[str, str]:
+    """Classify air temperature against cereal crop heat-stress thresholds.
+
+    Returns a ``(label, alert_level)`` pair. Thresholds follow cardinal
+    temperatures for staple cereals: reproductive-stage stress begins in the
+    mid-30s C and becomes severe approaching ~38 C.
+
+    Note
+    ----
+    Real crop impact depends on growth stage, duration, humidity and cultivar;
+    this is a single-value proxy for interpretation only.
+    """
+    t = float(t2m_c)
+    if t >= 38.0:
+        return "Severe crop heat stress", "red"
+    if t >= 34.0:
+        return "Crop heat stress", "orange"
+    if t >= 30.0:
+        return "Mild crop heat stress", "yellow"
+    return "No crop heat stress", "none"
+
+
+def heat_health_caution(feels_like_c: float) -> tuple[str, str]:
+    """Map apparent ("feels-like") temperature to NOAA Heat Index caution bands.
+
+    Parameters
+    ----------
+    feels_like_c : float
+        Apparent temperature in deg C (e.g. from :func:`heat_index`).
+
+    Returns
+    -------
+    tuple[str, str]
+        ``(label, alert_level)`` using NOAA/NWS bands converted to Celsius.
+    """
+    hi = float(feels_like_c)
+    if hi >= 54.0:
+        return "Extreme danger (heat stroke likely)", "red"
+    if hi >= 41.0:
+        return "Danger (heat cramps/exhaustion likely)", "red"
+    if hi >= 32.0:
+        return "Extreme caution (heat exhaustion possible)", "orange"
+    if hi >= 27.0:
+        return "Caution (fatigue with prolonged exposure)", "yellow"
+    return "No heat-health concern", "none"
+
+
+def cooling_degree_hours(t2m_c: float | np.ndarray,
+                         base_c: float = 18.0) -> np.ndarray:
+    """Cooling Degree Hours above a base temperature (default 18 C, ASHRAE).
+
+    CDH = max(T - base, 0), summed over hours by the caller. A higher value
+    means more cooling energy demand. Returned per-hour so callers can sum or
+    average over a horizon.
+    """
+    t = np.asarray(t2m_c, dtype=float)
+    return np.clip(t - base_c, 0.0, None)
+
+
+def cooling_demand_category(cdh_24h: float) -> tuple[str, str]:
+    """Classify a 24-hour Cooling Degree Hours total into demand bands.
+
+    Bands are pragmatic groupings over the 18 C-base CDH accumulated across a
+    day: higher CDH implies sustained cooling load. Provided for at-a-glance
+    interpretation of the energy indicator.
+    """
+    c = float(cdh_24h)
+    if c >= 240.0:      # ~ sustained 10 C above base all day
+        return "Very high cooling demand", "red"
+    if c >= 120.0:      # ~ sustained 5 C above base
+        return "High cooling demand", "orange"
+    if c >= 24.0:       # ~ sustained 1 C above base
+        return "Moderate cooling demand", "yellow"
+    return "Low cooling demand", "none"
+
+
+@dataclass
+class SectorReport:
+    """Sector-level interpretation of one forecast state."""
+
+    crop_label: str
+    crop_alert: str
+    health_label: str
+    health_alert: str
+    cooling_label: str
+    cooling_alert: str
+    cooling_degree_hours_24h: float
+    disclaimer: str = SECTOR_DISCLAIMER
+
+
+def summarize_sectors(
+    t2m_c: float,
+    d2m_c: float,
+) -> SectorReport:
+    """Build a sector report (agriculture, health, energy) for one state.
+
+    Parameters
+    ----------
+    t2m_c, d2m_c : float
+        Air temperature and dewpoint in deg C. Dewpoint feeds the feels-like
+        temperature used for the heat-health band.
+    """
+    feels = float(heat_index(t2m_c, d2m_c))
+    crop_label, crop_alert = crop_heat_stress(t2m_c)
+    health_label, health_alert = heat_health_caution(feels)
+    # Single-hour CDH scaled to a 24h-equivalent for the demand band.
+    cdh_24h = float(cooling_degree_hours(t2m_c)) * 24.0
+    cooling_label, cooling_alert = cooling_demand_category(cdh_24h)
+
+    return SectorReport(
+        crop_label=crop_label,
+        crop_alert=crop_alert,
+        health_label=health_label,
+        health_alert=health_alert,
+        cooling_label=cooling_label,
+        cooling_alert=cooling_alert,
+        cooling_degree_hours_24h=cdh_24h,
+    )

@@ -1,0 +1,125 @@
+{
+  "run_id": "lstm_scratch_kolkata_seed42_001",
+  "model": "lstm",
+  "parameter_count": 52102,
+  "seed": 42,
+  "input_window": 24,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "hyperparameters": {
+    "n_features": 6,
+    "n_targets": 6,
+    "input_window": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "max_epochs": 100,
+    "early_stopping_patience": 10
+  },
+  "training_epochs": 32,
+  "best_epoch": 22,
+  "best_val_loss": 0.07232376454131943,
+  "wall_clock_seconds": 175.24,
+  "test_sample_count": 8760,
+  "city": "Kolkata",
+  "city_slug": "kolkata",
+  "latitude": 22.57,
+  "longitude": 88.36,
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.38183358311653137,
+      "rmse": 0.5418145656585693
+    },
+    "d2m": {
+      "mae": 0.3991619944572449,
+      "rmse": 0.6125720739364624
+    },
+    "sp": {
+      "mae": 0.38596975803375244,
+      "rmse": 0.6330870985984802
+    },
+    "tp": {
+      "mae": 0.1907459795475006,
+      "rmse": 0.5888802409172058
+    },
+    "u10": {
+      "mae": 0.25301700830459595,
+      "rmse": 0.3878518044948578
+    },
+    "v10": {
+      "mae": 0.282575786113739,
+      "rmse": 0.4246668219566345
+    }
+  },
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "persistence_comparison": {
+    "t2m": {
+      "persistence_rmse": 0.9563,
+      "lstm_rmse": 0.5418,
+      "abs_diff": 0.4145,
+      "pct_improvement": 43.34,
+      "lstm_better": true
+    },
+    "d2m": {
+      "persistence_rmse": 0.564,
+      "lstm_rmse": 0.6126,
+      "abs_diff": -0.0486,
+      "pct_improvement": -8.61,
+      "lstm_better": false
+    },
+    "sp": {
+      "persistence_rmse": 0.5855,
+      "lstm_rmse": 0.6331,
+      "abs_diff": -0.0476,
+      "pct_improvement": -8.13,
+      "lstm_better": false
+    },
+    "tp": {
+      "persistence_rmse": 0.6981,
+      "lstm_rmse": 0.5889,
+      "abs_diff": 0.1092,
+      "pct_improvement": 15.65,
+      "lstm_better": true
+    },
+    "u10": {
+      "persistence_rmse": 0.4019,
+      "lstm_rmse": 0.3879,
+      "abs_diff": 0.014,
+      "pct_improvement": 3.5,
+      "lstm_better": true
+    },
+    "v10": {
+      "persistence_rmse": 0.4624,
+      "lstm_rmse": 0.4247,
+      "abs_diff": 0.0377,
+      "pct_improvement": 8.16,
+      "lstm_better": true
+    }
+  },
+  "evaluation_date": "2026-09-29T14:30:57.418362+00:00"
+}

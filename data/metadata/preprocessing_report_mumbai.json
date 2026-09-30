@@ -1,0 +1,88 @@
+{
+  "report_type": "preprocessing",
+  "report_date": "2026-09-29T13:44:28.902127+00:00",
+  "source": "ERA5-Land hourly time-series",
+  "target_location": "Mumbai",
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "n_features": 6,
+  "n_targets": 6,
+  "input_window": 24,
+  "unit_conversions": {
+    "t2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "d2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "sp": "Pa \u2192 hPa (divide by 100)",
+    "tp": "m \u2192 mm (multiply by 1000)",
+    "u10": "m s**-1 \u2192 m/s (no conversion needed)",
+    "v10": "m s**-1 \u2192 m/s (no conversion needed)"
+  },
+  "precipitation_negatives_corrected": 888,
+  "timestamp_validation": {
+    "is_sorted": true,
+    "n_duplicates": 0,
+    "n_records": 61368,
+    "first_timestamp": "2018-01-01 00:00:00",
+    "last_timestamp": "2024-12-31 23:00:00",
+    "detected_interval": "0 days 01:00:00",
+    "expected_interval": "1h",
+    "n_irregular_intervals": 0,
+    "n_missing_timestamps": 0
+  },
+  "split_summary": {
+    "train": {
+      "rows": 43824,
+      "start": "2018-01-01 00:00:00",
+      "end": "2022-12-31 23:00:00",
+      "sequences": 43800
+    },
+    "validation": {
+      "rows": 8760,
+      "start": "2023-01-01 00:00:00",
+      "end": "2023-12-31 23:00:00",
+      "sequences": 8736
+    },
+    "test": {
+      "rows": 8784,
+      "start": "2024-01-01 00:00:00",
+      "end": "2024-12-31 23:00:00",
+      "sequences": 8760
+    }
+  },
+  "total_rows": 61368,
+  "total_sequences": 61296,
+  "scaler_type": "StandardScaler",
+  "scaler_path": "data/processed/mumbai/scaler.joblib",
+  "scaler_means": {
+    "t2m": 26.81254120750469,
+    "d2m": 21.694170418774487,
+    "sp": 1007.7757709763615,
+    "tp": 0.2572742278566774,
+    "u10": 1.602399425007819,
+    "v10": -0.06630567796650748
+  },
+  "scaler_scales": {
+    "t2m": 3.050823454577196,
+    "d2m": 3.664162933191103,
+    "sp": 3.7698256945089654,
+    "tp": 0.8125960969490712,
+    "u10": 2.4397370885030445,
+    "v10": 2.6504226446687604
+  },
+  "artifacts": [
+    "data/processed/mumbai/train.csv",
+    "data/processed/mumbai/val.csv",
+    "data/processed/mumbai/test.csv",
+    "data/processed/mumbai/train_scaled.csv",
+    "data/processed/mumbai/val_scaled.csv",
+    "data/processed/mumbai/test_scaled.csv",
+    "data/processed/mumbai/scaler.joblib"
+  ],
+  "missing_value_strategy": "drop",
+  "derived_features": []
+}

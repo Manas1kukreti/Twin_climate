@@ -1,0 +1,88 @@
+{
+  "report_type": "preprocessing",
+  "report_date": "2026-09-29T13:45:45.242678+00:00",
+  "source": "ERA5-Land hourly time-series",
+  "target_location": "Bengaluru",
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "n_features": 6,
+  "n_targets": 6,
+  "input_window": 24,
+  "unit_conversions": {
+    "t2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "d2m": "K \u2192 \u00b0C (subtract 273.15)",
+    "sp": "Pa \u2192 hPa (divide by 100)",
+    "tp": "m \u2192 mm (multiply by 1000)",
+    "u10": "m s**-1 \u2192 m/s (no conversion needed)",
+    "v10": "m s**-1 \u2192 m/s (no conversion needed)"
+  },
+  "precipitation_negatives_corrected": 958,
+  "timestamp_validation": {
+    "is_sorted": true,
+    "n_duplicates": 0,
+    "n_records": 61368,
+    "first_timestamp": "2018-01-01 00:00:00",
+    "last_timestamp": "2024-12-31 23:00:00",
+    "detected_interval": "0 days 01:00:00",
+    "expected_interval": "1h",
+    "n_irregular_intervals": 0,
+    "n_missing_timestamps": 0
+  },
+  "split_summary": {
+    "train": {
+      "rows": 43824,
+      "start": "2018-01-01 00:00:00",
+      "end": "2022-12-31 23:00:00",
+      "sequences": 43800
+    },
+    "validation": {
+      "rows": 8760,
+      "start": "2023-01-01 00:00:00",
+      "end": "2023-12-31 23:00:00",
+      "sequences": 8736
+    },
+    "test": {
+      "rows": 8784,
+      "start": "2024-01-01 00:00:00",
+      "end": "2024-12-31 23:00:00",
+      "sequences": 8760
+    }
+  },
+  "total_rows": 61368,
+  "total_sequences": 61296,
+  "scaler_type": "StandardScaler",
+  "scaler_path": "data/processed/bengaluru/scaler.joblib",
+  "scaler_means": {
+    "t2m": 22.86224428116296,
+    "d2m": 16.326659626314875,
+    "sp": 909.674489034184,
+    "tp": 0.12985541745475299,
+    "u10": 0.37080088953068324,
+    "v10": 0.10052274634865088
+  },
+  "scaler_scales": {
+    "t2m": 4.020933181117957,
+    "d2m": 4.173738348564722,
+    "sp": 2.576959214728024,
+    "tp": 0.5107407986088943,
+    "u10": 2.922272090591399,
+    "v10": 1.1427496591848874
+  },
+  "artifacts": [
+    "data/processed/bengaluru/train.csv",
+    "data/processed/bengaluru/val.csv",
+    "data/processed/bengaluru/test.csv",
+    "data/processed/bengaluru/train_scaled.csv",
+    "data/processed/bengaluru/val_scaled.csv",
+    "data/processed/bengaluru/test_scaled.csv",
+    "data/processed/bengaluru/scaler.joblib"
+  ],
+  "missing_value_strategy": "drop",
+  "derived_features": []
+}

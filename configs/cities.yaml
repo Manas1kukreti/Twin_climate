@@ -1,0 +1,64 @@
+# ClimateTwin — Multi-city registry
+#
+# The single-city pipeline (configs/data.yaml) targets Delhi. This file lists
+# the additional cities the twin covers. Each entry carries the requested
+# coordinates used for the ERA5-Land point extraction and a short climate-zone
+# note. The pipeline resolves per-city artifact paths from `name` (see
+# src/cities.py); Delhi keeps its original, un-namespaced paths for
+# backward-compatibility with everything already built.
+#
+# Coordinates for Delhi/Mumbai/Bengaluru match data/metadata/dataset_selection.md.
+# Kolkata and Chennai use standard city-centre coordinates.
+
+# Shared temporal + split settings reused by every city (identical to
+# configs/data.yaml so all cities share one modelling convention).
+time_range:
+  start: "2018-01-01"
+  end: "2024-12-31"
+
+split:
+  train:
+    start: "2018-01-01T00:00:00"
+    end: "2022-12-31T23:00:00"
+  validation:
+    start: "2023-01-01T00:00:00"
+    end: "2023-12-31T23:00:00"
+  test:
+    start: "2024-01-01T00:00:00"
+    end: "2024-12-31T23:00:00"
+
+cities:
+  - name: "Delhi"
+    slug: "delhi"
+    latitude: 28.61
+    longitude: 77.21
+    climate_zone: "semi-arid, hot summers, monsoon"
+    is_primary: true          # Delhi keeps the original single-city artifact paths
+
+  - name: "Mumbai"
+    slug: "mumbai"
+    latitude: 19.08
+    longitude: 72.88
+    climate_zone: "coastal tropical, heavy monsoon"
+
+  - name: "Bengaluru"
+    slug: "bengaluru"
+    latitude: 12.97
+    longitude: 77.59
+    climate_zone: "plateau tropical, mild"
+
+  - name: "Kolkata"
+    slug: "kolkata"
+    latitude: 22.57
+    longitude: 88.36
+    climate_zone: "humid subtropical, monsoon, coastal-delta"
+
+  - name: "Chennai"
+    slug: "chennai"
+    # City centre is 13.08, 80.27, but the nearest ERA5-Land 0.1° grid point
+    # there falls on the Bay of Bengal (all-NaN — ERA5-Land is land-only).
+    # Nudged ~0.07° west to the nearest valid LAND grid point, still within
+    # the Chennai urban area. Verified land via scripts/probe_land_point.py.
+    latitude: 13.08
+    longitude: 80.20
+    climate_zone: "coastal tropical, NE monsoon"

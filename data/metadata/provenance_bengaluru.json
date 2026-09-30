@@ -1,0 +1,57 @@
+{
+  "synthetic": false,
+  "provider": "Copernicus Climate Change Service (C3S) / ECMWF",
+  "dataset_id": "reanalysis-era5-land-timeseries",
+  "dataset_doi": "10.24381/ee82e357",
+  "license": "CC-BY 4.0",
+  "city": "Bengaluru",
+  "slug": "bengaluru",
+  "requested_location": {
+    "latitude": 12.97,
+    "longitude": 77.59
+  },
+  "requested_period": {
+    "start": "2018-01-01",
+    "end": "2024-12-31"
+  },
+  "is_pilot": false,
+  "raw_files": [
+    {
+      "group": "2m_temperature",
+      "variables_cds_request": [
+        "2m_temperature",
+        "2m_dewpoint_temperature"
+      ],
+      "zip_path": "data/raw/era5land/bengaluru/era5land_2m_temperature_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "eaaf1e33176c58d88af5f52983a44e67e1a090b15144115099130d34931c73fd",
+      "nc_path": "data/processed/source_extracted/bengaluru/era5land_2m_temperature_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "6e1a5b0865f70b5257cd47d0e9a69706130b62538b92395a07e26a860f47de6a",
+      "retrieved_at": "2026-09-29T13:14:35.049302+00:00"
+    },
+    {
+      "group": "pressure_precipitation",
+      "variables_cds_request": [
+        "surface_pressure",
+        "total_precipitation"
+      ],
+      "zip_path": "data/raw/era5land/bengaluru/era5land_pressure_precipitation_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "21a707ac3bbd480ca50ee3c2a35d95b8ba433db86f2205d132073330c6a6143d",
+      "nc_path": "data/processed/source_extracted/bengaluru/era5land_pressure_precipitation_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "cec2c4f7cc86cdd1a5c87a812f4bda4e209963cd1950095946c816994bd8d89f",
+      "retrieved_at": "2026-09-29T13:16:17.115346+00:00"
+    },
+    {
+      "group": "wind",
+      "variables_cds_request": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind"
+      ],
+      "zip_path": "data/raw/era5land/bengaluru/era5land_wind_2018-01-01_2024-12-31.zip",
+      "zip_sha256": "2f16b9bfdfe1a527a15e991dddc6251cfd7ffad5c8f2580a8ed04a6c748d81f3",
+      "nc_path": "data/processed/source_extracted/bengaluru/era5land_wind_2018-01-01_2024-12-31.nc",
+      "nc_sha256": "3fb6e9bd21eb0f512d70c845ecbf78f08c4db8b96caf45d546cf2fca7727e871",
+      "retrieved_at": "2026-09-29T13:17:03.256689+00:00"
+    }
+  ],
+  "retrieval_date": "2026-09-29"
+}

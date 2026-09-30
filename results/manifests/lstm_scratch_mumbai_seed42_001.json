@@ -1,0 +1,98 @@
+{
+  "run_id": "lstm_scratch_mumbai_seed42_001",
+  "stage": "scratch",
+  "model": "lstm",
+  "seed": 42,
+  "device": "cpu",
+  "dataset": {
+    "source": "ERA5-Land hourly time-series",
+    "source_type": "reanalysis_grid_cell",
+    "target_location": "Mumbai",
+    "variables": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "target_variables": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "units": {
+      "t2m": "\u00b0C",
+      "d2m": "\u00b0C",
+      "sp": "hPa",
+      "tp": "mm",
+      "u10": "m/s",
+      "v10": "m/s"
+    },
+    "sampling_interval": "1h",
+    "train_period": "2018-01-01T00:00:00 to 2022-12-31T23:00:00",
+    "validation_period": "2023-01-01T00:00:00 to 2023-12-31T23:00:00",
+    "test_period": "2024-01-01T00:00:00 to 2024-12-31T23:00:00"
+  },
+  "preprocessing": {
+    "scaler_type": "StandardScaler",
+    "scaler_path": "data/processed/mumbai/scaler.joblib",
+    "feature_order": [
+      "t2m",
+      "d2m",
+      "sp",
+      "tp",
+      "u10",
+      "v10"
+    ],
+    "input_window": 24,
+    "normalization_policy": "train_only_target_location"
+  },
+  "model_config": {
+    "n_features": 6,
+    "n_targets": 6,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "parameter_count": 52102
+  },
+  "training_config": {
+    "best_epoch": 35,
+    "wall_clock_seconds": 253.98,
+    "total_epochs": 45,
+    "best_val_loss": 0.019646804274192877,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "loss": "MSE",
+    "early_stopping_patience": 10
+  },
+  "hyperparameter_selection": {
+    "method": "single primary configuration per \u00a79.11",
+    "candidates_evaluated": [
+      {
+        "hidden_dim": 64,
+        "num_layers": 2,
+        "dropout": 0.1,
+        "learning_rate": 0.001
+      }
+    ],
+    "selection_rationale": "Primary configuration as approved, no search conducted."
+  },
+  "checkpoint_path": "/Users/arjungupta/Desktop/climatetwin/Twin_climate/results/checkpoints/lstm_mumbai_seed42_001.pt",
+  "metrics_path": "/Users/arjungupta/Desktop/climatetwin/Twin_climate/results/metrics/lstm_mumbai_metrics.json",
+  "predictions_path": "/Users/arjungupta/Desktop/climatetwin/Twin_climate/results/predictions/lstm_mumbai_predictions.csv",
+  "figures": [],
+  "software": {
+    "python": "3.13.2",
+    "pytorch": "2.14.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1"
+  },
+  "git_commit": "5865fdf",
+  "created_at": "2026-09-29T14:24:33.170999+00:00"
+}

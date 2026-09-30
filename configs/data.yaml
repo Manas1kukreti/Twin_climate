@@ -119,11 +119,15 @@ derived_features: []
 
 # --- Scenario perturbable features (Phase 13 RESOLVED) ---
 # Subset of feature_order exposed as user-facing what-if controls.
-# Chosen for intuitive interpretation: temperature, dewpoint, pressure.
-# Wind components (u10/v10) are excluded as they are less demo-legible.
+# Chosen for intuitive interpretation: temperature, dewpoint, pressure, and
+# precipitation. Precipitation is included so flood / heavy-rain what-ifs can
+# be driven from the UI (it feeds the IMD-threshold urban-flood assessment in
+# src/sectors.py). Wind components (u10/v10) remain excluded as less
+# demo-legible and not tied to a hazard threshold.
 perturbable_features:
   - "t2m"
   - "d2m"
   - "sp"
+  - "tp"
 # Pretraining geography: UNRESOLVED (Phase 8)
 # ACC feasibility: UNRESOLVED (Phase 6)

@@ -200,8 +200,19 @@ def fix_precipitation_negatives(
     return df_out, n_corrected
 
 
-def main(config_path: str = "configs/data.yaml") -> None:
-    """Run the full preprocessing pipeline."""
+def main(config_path: str = "configs/data.yaml", city_slug: str | None = None) -> None:
+    """Run the full preprocessing pipeline.
+
+    Parameters
+    ----------
+    config_path : str
+        Path to the data YAML config (feature_order, splits, units, scaler).
+    city_slug : str, optional
+        When set to a non-primary city, the extracted-input directory and all
+        output artifact paths are namespaced under that city (via
+        ``src.cities``). When ``None`` or the primary city (Delhi), the
+        original single-city paths are used unchanged.
+    """
     setup_logging("INFO")
     config = load_config(config_path)
 
@@ -215,15 +226,31 @@ def main(config_path: str = "configs/data.yaml") -> None:
     scaler_type = config["scaler_type"]
     input_window = config["input_window"]
 
+    # --- Resolve per-city paths (primary city keeps original locations) ---
+    from src.cities import get_city, primary_city
+
+    city = primary_city() if city_slug is None else get_city(city_slug)
+    if city.is_primary:
+        extracted_dir = EXTRACTED_DIR
+        processed_dir = PROCESSED_DIR
+        location_name = config.get("target_location", city.name)
+    else:
+        extracted_dir = EXTRACTED_DIR / city.slug
+        processed_dir = city.processed_dir
+        location_name = city.name
+
     logger.info("=== ClimateTwin Preprocessing Pipeline ===")
+    logger.info("City: %s (%s)", location_name, "primary" if city.is_primary else city.slug)
     logger.info("Features: %s", feature_order)
     logger.info("Period: %s to %s", start, end)
     logger.info("Split: train→%s, val→%s", train_end, val_end)
     logger.info("Scaler: %s (train-only fit)", scaler_type)
     logger.info("Input window: %d", input_window)
+    logger.info("Extracted input: %s", extracted_dir)
+    logger.info("Processed output: %s", processed_dir)
 
     # --- Step 1: Load raw data ---
-    df = load_and_merge_netcdf(EXTRACTED_DIR, feature_order, start, end)
+    df = load_and_merge_netcdf(extracted_dir, feature_order, start, end)
 
     # --- Step 2: Validate timestamps ---
     ts_report = validate_timestamps(df, expected_interval="1h")
@@ -246,10 +273,10 @@ def main(config_path: str = "configs/data.yaml") -> None:
     )
 
     # --- Step 8: Save unscaled splits ---
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    train_df.to_csv(PROCESSED_DIR / "train.csv", index=False)
-    val_df.to_csv(PROCESSED_DIR / "val.csv", index=False)
-    test_df.to_csv(PROCESSED_DIR / "test.csv", index=False)
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    train_df.to_csv(processed_dir / "train.csv", index=False)
+    val_df.to_csv(processed_dir / "val.csv", index=False)
+    test_df.to_csv(processed_dir / "test.csv", index=False)
     logger.info(
         "Saved unscaled splits: train=%d, val=%d, test=%d",
         len(train_df), len(val_df), len(test_df),
@@ -264,9 +291,9 @@ def main(config_path: str = "configs/data.yaml") -> None:
     test_scaled = transform_data(test_df, scaler, feature_order)
 
     # --- Step 11: Save scaled splits ---
-    train_scaled.to_csv(PROCESSED_DIR / "train_scaled.csv", index=False)
-    val_scaled.to_csv(PROCESSED_DIR / "val_scaled.csv", index=False)
-    test_scaled.to_csv(PROCESSED_DIR / "test_scaled.csv", index=False)
+    train_scaled.to_csv(processed_dir / "train_scaled.csv", index=False)
+    val_scaled.to_csv(processed_dir / "val_scaled.csv", index=False)
+    test_scaled.to_csv(processed_dir / "test_scaled.csv", index=False)
     logger.info("Saved scaled splits.")
 
     # --- Step 12: Save scaler ---
@@ -277,8 +304,9 @@ def main(config_path: str = "configs/data.yaml") -> None:
         "normalization_policy": "train_only_target_location",
         "converted_units": config.get("converted_units", {}),
         "n_train_samples": len(train_df),
+        "city": location_name,
     }
-    save_scaler(scaler, feature_order, scaler_meta, PROCESSED_DIR / "scaler.joblib")
+    save_scaler(scaler, feature_order, scaler_meta, processed_dir / "scaler.joblib")
 
     # --- Step 13: Compute sequence counts (for reporting, not saving sequences yet) ---
     n_seq_train = max(0, len(train_scaled) - input_window)
@@ -290,7 +318,7 @@ def main(config_path: str = "configs/data.yaml") -> None:
         "report_type": "preprocessing",
         "report_date": datetime.now(UTC).isoformat(),
         "source": config["source"],
-        "target_location": config["target_location"],
+        "target_location": location_name,
         "feature_order": feature_order,
         "n_features": len(feature_order),
         "n_targets": len(feature_order),
@@ -321,7 +349,7 @@ def main(config_path: str = "configs/data.yaml") -> None:
         "total_rows": len(df),
         "total_sequences": n_seq_train + n_seq_val + n_seq_test,
         "scaler_type": scaler_type,
-        "scaler_path": "data/processed/scaler.joblib",
+        "scaler_path": str((processed_dir / "scaler.joblib").relative_to(PROJECT_ROOT)),
         "scaler_means": {
             feat: float(scaler.mean_[i]) for i, feat in enumerate(feature_order)
         },
@@ -329,19 +357,23 @@ def main(config_path: str = "configs/data.yaml") -> None:
             feat: float(scaler.scale_[i]) for i, feat in enumerate(feature_order)
         },
         "artifacts": [
-            "data/processed/train.csv",
-            "data/processed/val.csv",
-            "data/processed/test.csv",
-            "data/processed/train_scaled.csv",
-            "data/processed/val_scaled.csv",
-            "data/processed/test_scaled.csv",
-            "data/processed/scaler.joblib",
+            str((processed_dir / name).relative_to(PROJECT_ROOT))
+            for name in (
+                "train.csv", "val.csv", "test.csv",
+                "train_scaled.csv", "val_scaled.csv", "test_scaled.csv",
+                "scaler.joblib",
+            )
         ],
         "missing_value_strategy": "drop",
         "derived_features": [],
     }
 
-    report_path = METADATA_DIR / "preprocessing_report.json"
+    report_name = (
+        "preprocessing_report.json"
+        if city.is_primary
+        else f"preprocessing_report_{city.slug}.json"
+    )
+    report_path = METADATA_DIR / report_name
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, default=str)
     logger.info("Preprocessing report: %s", report_path)
@@ -360,5 +392,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Preprocess ClimateTwin data")
     parser.add_argument("--config", default="configs/data.yaml")
+    parser.add_argument(
+        "--city", default=None,
+        help="City slug (default: primary city / Delhi with original paths)",
+    )
     args = parser.parse_args()
-    main(args.config)
+    main(args.config, args.city)

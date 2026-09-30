@@ -1,0 +1,125 @@
+{
+  "run_id": "lstm_scratch_mumbai_seed42_001",
+  "model": "lstm",
+  "parameter_count": 52102,
+  "seed": 42,
+  "input_window": 24,
+  "feature_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "target_order": [
+    "t2m",
+    "d2m",
+    "sp",
+    "tp",
+    "u10",
+    "v10"
+  ],
+  "hyperparameters": {
+    "n_features": 6,
+    "n_targets": 6,
+    "input_window": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "max_epochs": 100,
+    "early_stopping_patience": 10
+  },
+  "training_epochs": 45,
+  "best_epoch": 35,
+  "best_val_loss": 0.019646804274192877,
+  "wall_clock_seconds": 253.98,
+  "test_sample_count": 8760,
+  "city": "Mumbai",
+  "city_slug": "mumbai",
+  "latitude": 19.08,
+  "longitude": 72.88,
+  "per_variable_metrics": {
+    "t2m": {
+      "mae": 0.19217714667320251,
+      "rmse": 0.27637776732444763
+    },
+    "d2m": {
+      "mae": 0.2209957242012024,
+      "rmse": 0.32470113039016724
+    },
+    "sp": {
+      "mae": 0.2092449814081192,
+      "rmse": 0.29002276062965393
+    },
+    "tp": {
+      "mae": 0.10751182585954666,
+      "rmse": 0.33924758434295654
+    },
+    "u10": {
+      "mae": 0.2394639104604721,
+      "rmse": 0.36640089750289917
+    },
+    "v10": {
+      "mae": 0.23923389613628387,
+      "rmse": 0.3531588017940521
+    }
+  },
+  "units": {
+    "t2m": "\u00b0C",
+    "d2m": "\u00b0C",
+    "sp": "hPa",
+    "tp": "mm",
+    "u10": "m/s",
+    "v10": "m/s"
+  },
+  "persistence_comparison": {
+    "t2m": {
+      "persistence_rmse": 0.7759,
+      "lstm_rmse": 0.2764,
+      "abs_diff": 0.4995,
+      "pct_improvement": 64.38,
+      "lstm_better": true
+    },
+    "d2m": {
+      "persistence_rmse": 0.467,
+      "lstm_rmse": 0.3247,
+      "abs_diff": 0.1423,
+      "pct_improvement": 30.47,
+      "lstm_better": true
+    },
+    "sp": {
+      "persistence_rmse": 0.5507,
+      "lstm_rmse": 0.29,
+      "abs_diff": 0.2607,
+      "pct_improvement": 47.34,
+      "lstm_better": true
+    },
+    "tp": {
+      "persistence_rmse": 0.3312,
+      "lstm_rmse": 0.3392,
+      "abs_diff": -0.008,
+      "pct_improvement": -2.43,
+      "lstm_better": false
+    },
+    "u10": {
+      "persistence_rmse": 0.6016,
+      "lstm_rmse": 0.3664,
+      "abs_diff": 0.2352,
+      "pct_improvement": 39.1,
+      "lstm_better": true
+    },
+    "v10": {
+      "persistence_rmse": 0.4207,
+      "lstm_rmse": 0.3532,
+      "abs_diff": 0.0675,
+      "pct_improvement": 16.05,
+      "lstm_better": true
+    }
+  },
+  "evaluation_date": "2026-09-29T14:24:32.980000+00:00"
+}
