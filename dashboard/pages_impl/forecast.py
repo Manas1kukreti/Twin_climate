@@ -14,7 +14,8 @@ import streamlit as st
 from dashboard.core import (
     TwinArtifacts,
     feature_label,
-    max_window_start,
+    observed_after,
+    pick_start_index,
     window_at,
     window_end_timestamp,
 )
@@ -56,18 +57,9 @@ def render(art: TwinArtifacts) -> None:
         "the twin predicts forward one hour at a time."
     )
 
-    max_start = max_window_start(art)
-
     with st.sidebar:
         st.subheader("Forecast controls")
-        start_index = st.slider(
-            "Start hour (index into 2024 test split)",
-            min_value=0,
-            max_value=max_start,
-            value=min(4000, max_start),
-            step=1,
-            help="Selects which real 24-hour window seeds the forecast.",
-        )
+        start_index = pick_start_index(art, "forecast")
         horizon = st.slider("Forecast horizon (hours)", 1, 48, 12,
                             help="How many hours ahead to roll the twin forward.")
         mc_samples = st.select_slider(
@@ -102,6 +94,9 @@ def render(art: TwinArtifacts) -> None:
 
     hours = np.arange(1, result.horizon + 1)
     has_band = result.baseline_lower is not None
+    observed = observed_after(art, start_index, result.horizon)
+    st.caption("Orange dotted line: what actually happened in 2024 (ERA5-Land). The model never saw "
+               "these hours during training.")
 
     for feat in chosen:
         vi = art.feature_order.index(feat)
@@ -122,6 +117,12 @@ def render(art: TwinArtifacts) -> None:
             x=hours, y=result.baseline[:, vi], mode="lines+markers",
             line=dict(color="#1f77b4", width=2), name="Forecast",
         ))
+        if len(observed):
+            fig.add_trace(go.Scatter(
+                x=hours[:len(observed)], y=observed[:, vi], mode="lines+markers",
+                line=dict(color="#f5a623", width=2.5, dash="dot"), marker=dict(size=6),
+                name="Observed (actual 2024)",
+            ))
         fig.update_layout(
             title=feature_label(feat, art.units),
             xaxis_title="Hours ahead",

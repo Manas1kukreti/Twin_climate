@@ -193,6 +193,63 @@ def max_window_start(art: TwinArtifacts) -> int:
     return len(art.test_scaled) - art.input_window - 1
 
 
+def observed_after(art: TwinArtifacts, start_index: int, horizon: int) -> np.ndarray:
+    """Observed physical values for the ``horizon`` hours after the window.
+
+    Shape ``(n, n_features)`` with ``n <= horizon`` (shorter near the end of 2024).
+    """
+    a = start_index + art.input_window
+    rows = art.test_scaled[a:a + horizon]
+    return art.scaler.inverse_transform(rows) if len(rows) else np.empty((0, len(art.feature_order)))
+
+
+def demo_presets(art: TwinArtifacts) -> dict[str, tuple[str, int]]:
+    """Notable 2024 moments in this city: ``{kind: (label, start_index)}``.
+
+    Kinds are the same for every city, so a chosen preset survives a city switch.
+    'now' is placed a few hours before the event so the forecast has to reach it.
+    """
+    phys = art.scaler.inverse_transform(art.test_scaled)
+    n_hours = len(phys)
+    max_start = max_window_start(art)
+
+    def start_for(event_row: int, hours_before: int) -> int:
+        now_row = max(art.input_window - 1, event_row - hours_before)
+        return int(min(max_start, now_row - art.input_window + 1))
+
+    def day(row: int) -> str:
+        return f"{art.timestamps.iloc[row]:%d %b}"
+
+    presets: dict[str, tuple[str, int]] = {}
+    if "t2m" in art.feature_order:
+        t = phys[:, art.feature_order.index("t2m")]
+        hot = int(np.argmax(t))
+        cold = int(np.argmin(t))
+        presets["hot"] = (f"Hottest hour of 2024 ({day(hot)})", start_for(hot, 6))
+        presets["cold"] = (f"Coldest hour of 2024 ({day(cold)})", start_for(cold, 6))
+    if "tp" in art.feature_order:
+        rain = int(np.argmax(phys[:, art.feature_order.index("tp")]))
+        presets["rain"] = (f"Heaviest rain hour of 2024 ({day(rain)})", start_for(rain, 3))
+    typical = min(n_hours - 1, int(np.searchsorted(art.timestamps.to_numpy(),
+                                                   np.datetime64("2024-04-01T12:00"))))
+    presets["typical"] = ("Typical day (1 Apr 2024)", start_for(typical, 6))
+    return presets
+
+
+def pick_start_index(art: TwinArtifacts, key: str) -> int:
+    """Sidebar control: a named 2024 moment, or a custom hour slider."""
+    presets = demo_presets(art)
+    choice = st.selectbox(
+        "Start moment (2024 test year)", [*presets, "custom"], key=f"{key}_preset",
+        format_func=lambda k: presets[k][0] if k in presets else "Custom…",
+    )
+    if choice in presets:
+        return presets[choice][1]
+    max_start = max_window_start(art)
+    return st.slider("Start hour (index into 2024 test split)", 0, max_start,
+                     min(4000, max_start), 1, key=f"{key}_slider")
+
+
 def feature_label(name: str, units: dict[str, str]) -> str:
     """Pretty label for a feature including its unit, e.g. 'Air temperature (°C)'."""
     base = VARIABLE_LABELS.get(name, name)

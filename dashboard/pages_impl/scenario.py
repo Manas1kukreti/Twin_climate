@@ -21,6 +21,7 @@ from dashboard.core import (
     feature_label,
     load_artifacts,
     max_window_start,
+    pick_start_index,
     window_at,
     window_end_timestamp,
 )
@@ -539,14 +540,9 @@ def render(art: TwinArtifacts) -> None:
         "the scenario stops being trustworthy."
     )
 
-    max_start = max_window_start(art)
-
     with st.sidebar:
         st.subheader("Scenario controls")
-        start_index = st.slider(
-            "Start hour (index into 2024 test split)",
-            0, max_start, min(4000, max_start), 1,
-        )
+        start_index = pick_start_index(art, "scenario")
         horizon = st.slider("Horizon (hours)", 1, 48, 12)
         mc_samples = st.select_slider(
             "MC-dropout passes", options=[1, 10, 20, 40, 60], value=40,
